@@ -1,26 +1,45 @@
-import OgpComponent from "@/components/OgpComponent";
+import { NextPage } from "next";
+import { useEffect, useState } from "react";
 
-export default function Home() {
-  const size = 400;
+const Page: NextPage = () => {
+  const [imageSrc, setImageSrc] = useState<string | null>(null);
+
+  const fetchImage = async () => {
+    try {
+      const response = await fetch("/api");
+      const blob = await response.blob();
+      const imageUrl = URL.createObjectURL(blob);
+      setImageSrc(imageUrl);
+    } catch (error) {
+      console.error("Error fetching image:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchImage();
+  }, []);
 
   return (
-    <>
-      <div
+    <div>
+      <div>
+        {imageSrc ? (
+          <img src={imageSrc} alt="Generated Image" />
+        ) : (
+          <p>Loading...</p>
+        )}
+      </div>
+      <button
         style={{
-          width: `${size}px`,
-          height: `${size}px`,
-          border: "1px solid black",
+          padding: "10px",
+        }}
+        onClick={() => {
+          fetchImage();
         }}
       >
-        <OgpComponent
-          title="LGTM"
-          subTitle="Looks Good To Me"
-          imagePath="/moai.png"
-          size={size}
-        />
-      </div>
-      <p>width: {`${size}px`}</p>
-      <p>height: {`${size}px`}</p>
-    </>
+        Generated Image
+      </button>
+    </div>
   );
-}
+};
+
+export default Page;
