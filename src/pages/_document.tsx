@@ -7,10 +7,6 @@ export default function Document() {
     <Html lang="ja">
       <Head>
         <link rel="icon" href="/images/happy.png" />
-        {/* <meta
-          property="og:image"
-          content={`https://dynamic-ogp-moai.vercel.app/api/happy?${timestamp}`}
-        /> */}
         <meta
           httpEquiv="Cache-Control"
           content="no-cache, no-store, must-revalidate"

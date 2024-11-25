@@ -14,14 +14,14 @@ export default async function handler(req: NextRequest) {
 
   const inputName = pathname.split("/").pop() || "happy";
   const name = imagesList.includes(inputName) ? inputName : "happy";
-  const title = searchParams.get("title") || "LGTM";
-  const subTitle = searchParams.get("subTitle") || "Looks Good To Me";
+  const main = searchParams.get("main") || "LGTM";
+  const sub = searchParams.get("sub") || "Looks Good To Me";
   const imagePath = `${process.env.NEXT_PUBLIC_VERCEL_URL}/images/${name}.png`;
 
   const size = 400;
 
   const response = new ImageResponse(
-    React.createElement(OgpComponent, { title, subTitle, imagePath, size }),
+    React.createElement(OgpComponent, { main, sub, imagePath, size }),
     {
       width: size,
       height: size,
