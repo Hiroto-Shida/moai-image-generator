@@ -5,8 +5,8 @@ import Presenter from "./Presenter";
 
 export type FormType = {
   image: string;
-  title: string;
-  subTitle: string;
+  main: string;
+  sub: string;
 };
 
 type Props = {
@@ -16,31 +16,34 @@ type Props = {
 const Top: React.FC<Props> = ({ pageUrl }) => {
   const [imageSrc, setImageSrc] = useState<string | null>(null);
   const [generatedUrl, setGeneratedUrl] = useState<string>("");
+  const [generatedGithubUrl, setGeneratedGithubUrl] = useState<string>("");
 
   const methods = useForm<FormType>({
     mode: "onChange",
     defaultValues: {
       image: "happy",
-      title: "LGTM",
-      subTitle: "Looks Good To Me",
+      main: "LGTM",
+      sub: "Looks Good To Me",
     },
   });
 
   const fetchImage = useCallback(
-    async (image: string, title: string, subTitle: string) => {
-      const name = imagesList.includes(image) ? image : "happy";
+    async (image: string, main: string, sub: string) => {
+      const imageName = imagesList.includes(image) ? image : "happy";
       const url =
-        `/api/${name}` +
-        `${title || subTitle ? "?" : ""}` +
-        `${title ? `title=${title}` : ""}` +
-        `${title && subTitle ? "&" : ""}` +
-        `${subTitle ? `subTitle=${subTitle}` : ""}`;
+        `/${imageName}` +
+        `${main || sub ? "?" : ""}` +
+        `${main ? `main=${main}` : ""}` +
+        `${main && sub ? "&" : ""}` +
+        `${sub ? `sub=${sub}` : ""}`;
+      const apiUrl = `/api${url}`;
       try {
-        const response = await fetch(url);
+        const response = await fetch(apiUrl);
         const blob = await response.blob();
         const imageUrl = URL.createObjectURL(blob);
         setImageSrc(imageUrl);
-        setGeneratedUrl(`![](${pageUrl}${url})`);
+        setGeneratedUrl(`${pageUrl}${url}`);
+        setGeneratedGithubUrl(`![](${pageUrl}${url})`);
       } catch (error) {
         console.error("Error fetching image:", error);
       }
@@ -53,7 +56,7 @@ const Top: React.FC<Props> = ({ pageUrl }) => {
   }, [fetchImage]);
 
   const onSubmit: SubmitHandler<FormType> = (data) => {
-    fetchImage(data.image, data.title, data.subTitle);
+    fetchImage(data.image, data.main, data.sub);
   };
 
   const handleCopy = (
@@ -67,6 +70,7 @@ const Top: React.FC<Props> = ({ pageUrl }) => {
       <Presenter
         imageSrc={imageSrc}
         generatedUrl={generatedUrl}
+        generatedGithubUrl={generatedGithubUrl}
         onSubmit={onSubmit}
         handleCopy={handleCopy}
       />

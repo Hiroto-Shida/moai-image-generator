@@ -1,18 +1,13 @@
 import MoaiImage from "../MoaiImage";
 
 type Props = {
-  title: string;
-  subTitle: string;
+  main: string;
+  sub: string;
   imagePath: string;
   size: number;
 };
 
-const OgpComponent: React.FC<Props> = ({
-  title,
-  subTitle,
-  imagePath,
-  size,
-}) => {
+const OgpComponent: React.FC<Props> = ({ main, sub, imagePath, size }) => {
   const fontColor = "#ffffff";
   const shadowColor = "#000000";
 
@@ -57,7 +52,7 @@ const OgpComponent: React.FC<Props> = ({
               zIndex: "2",
             }}
           >
-            {title}
+            {main}
           </p>
           <p
             style={{
@@ -71,7 +66,7 @@ const OgpComponent: React.FC<Props> = ({
               zIndex: "2",
             }}
           >
-            {subTitle}
+            {sub}
           </p>
         </div>
       </div>

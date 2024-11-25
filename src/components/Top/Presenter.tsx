@@ -4,12 +4,14 @@ import { FormType } from ".";
 type Props = {
   imageSrc: string | null;
   generatedUrl: string;
+  generatedGithubUrl: string;
   onSubmit: SubmitHandler<FormType>;
   handleCopy: (e: React.MouseEvent<HTMLParagraphElement, MouseEvent>) => void;
 };
 
 const Presenter: React.FC<Props> = ({
   generatedUrl,
+  generatedGithubUrl,
   onSubmit,
   handleCopy,
   imageSrc,
@@ -50,21 +52,43 @@ const Presenter: React.FC<Props> = ({
           <option value="macho">macho</option>
           <option value="walk">walk</option>
         </select>
-        <input {...register("title")} />
-        <input {...register("subTitle")} />
+        <input {...register("main")} />
+        <input {...register("sub")} />
 
         <button type="submit">Generate</button>
       </form>
 
-      <p
+      <div
         style={{
-          border: "1px solid #ccc",
-          cursor: "pointer",
+          padding: "10px",
+          display: "flex",
+          flexDirection: "column",
+          // gap: "10px",
+          width: "50%",
         }}
-        onClick={(e) => handleCopy(e)}
       >
-        {generatedUrl}
-      </p>
+        <p>URL</p>
+        <p
+          style={{
+            border: "1px solid #ccc",
+            cursor: "pointer",
+          }}
+          onClick={(e) => handleCopy(e)}
+        >
+          {generatedUrl}
+        </p>
+
+        <p>markdown</p>
+        <p
+          style={{
+            border: "1px solid #ccc",
+            cursor: "pointer",
+          }}
+          onClick={(e) => handleCopy(e)}
+        >
+          {generatedGithubUrl}
+        </p>
+      </div>
     </div>
   );
 };
