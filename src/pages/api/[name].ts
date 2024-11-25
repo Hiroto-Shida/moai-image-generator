@@ -3,20 +3,20 @@ import OgpComponent from "../../components/OgpComponent";
 import React from "react";
 import { NextRequest } from "next/server";
 import { robotoBold } from "../../../public/roboto_bold";
+import { imagesList } from "@/constants/imageList";
 
 export const config = {
   runtime: "edge",
 };
 
 export default async function handler(req: NextRequest) {
-  const url = new URL(req.url);
-  const title = url.searchParams.get("title") || "LGTM";
-  const subTitle = url.searchParams.get("subTitle") || "Looks Good To Me";
+  const { searchParams, pathname } = new URL(req.url);
 
-  // 現在の時刻を用いて、1-8までのランダムな数値を生成
-  const timestamp = new Date().getTime(); // 現在の時間をミリ秒単位で取得
-  const num = (timestamp % 8) + 1;
-  const imagePath = `${process.env.NEXT_PUBLIC_VERCEL_URL}/images/${num}.png`;
+  const inputName = pathname.split("/").pop() || "happy";
+  const name = imagesList.includes(inputName) ? inputName : "happy";
+  const title = searchParams.get("title") || "LGTM";
+  const subTitle = searchParams.get("subTitle") || "Looks Good To Me";
+  const imagePath = `${process.env.NEXT_PUBLIC_VERCEL_URL}/images/${name}.png`;
 
   const size = 400;
 

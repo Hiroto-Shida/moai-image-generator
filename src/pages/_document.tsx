@@ -6,10 +6,10 @@ export default function Document() {
   return (
     <Html lang="ja">
       <Head>
-        <link rel="icon" href="/moai_normal.png" />
+        <link rel="icon" href="/images/happy.png" />
         <meta
           property="og:image"
-          content={`https://dynamic-ogp-moai.vercel.app/api?${timestamp}`}
+          content={`https://dynamic-ogp-moai.vercel.app/api/happy?${timestamp}`}
         />
         <meta
           httpEquiv="Cache-Control"
