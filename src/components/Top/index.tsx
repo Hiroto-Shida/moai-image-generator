@@ -30,20 +30,25 @@ const Top: React.FC<Props> = ({ pageUrl }) => {
   const fetchImage = useCallback(
     async (image: string, main: string, sub: string) => {
       const imageName = imagesList.includes(image) ? image : "happy";
-      const url =
-        `/${imageName}` +
+      const topUrl =
+        `?image=${imageName}` +
+        `${main || sub ? "&" : ""}` +
+        `${main ? `main=${main}` : ""}` +
+        `${main && sub ? "&" : ""}` +
+        `${sub ? `sub=${sub}` : ""}`;
+      const apiUrl =
+        `/api/${imageName}` +
         `${main || sub ? "?" : ""}` +
         `${main ? `main=${main}` : ""}` +
         `${main && sub ? "&" : ""}` +
         `${sub ? `sub=${sub}` : ""}`;
-      const apiUrl = `/api${url}`;
       try {
         const response = await fetch(apiUrl);
         const blob = await response.blob();
         const imageUrl = URL.createObjectURL(blob);
         setImageSrc(imageUrl);
-        setGeneratedUrl(`${pageUrl}${url}`);
-        setGeneratedGithubUrl(`![](${pageUrl}${url})`);
+        setGeneratedUrl(`${pageUrl}${topUrl}`);
+        setGeneratedGithubUrl(`![](${pageUrl}${apiUrl})`);
       } catch (error) {
         console.error("Error fetching image:", error);
       }
