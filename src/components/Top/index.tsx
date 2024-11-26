@@ -44,12 +44,12 @@ const Top: React.FC<Props> = ({ pageUrl }) => {
         `${main && sub ? "&" : ""}` +
         `${sub ? `sub=${sub}` : ""}`;
       try {
-        const response = await fetch(apiUrl);
+        const response = await fetch(apiUrl.replace(/\s/g, "%20"));
         const blob = await response.blob();
         const imageUrl = URL.createObjectURL(blob);
         setImageSrc(imageUrl);
-        setGeneratedUrl(`${pageUrl}${topUrl}`);
-        setGeneratedGithubUrl(`![](${pageUrl}${apiUrl})`);
+        setGeneratedUrl(`${pageUrl}${topUrl.replace(/\s/g, "%20")}`);
+        setGeneratedGithubUrl(`![](${pageUrl}${apiUrl.replace(/\s/g, "%20")})`);
       } catch (error) {
         console.error("Error fetching image:", error);
       }
