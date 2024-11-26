@@ -33,7 +33,7 @@ const Presenter: React.FC<Props> = ({
         )}
       </div>
       <form onSubmit={handleSubmit(onSubmit)} className={styles.formWrapper}>
-        <select {...register("image")}>
+        <select {...register("image")} className={styles.field}>
           <option value="happy">happy</option>
           <option value="good">good</option>
           <option value="appear">appear</option>
@@ -43,8 +43,8 @@ const Presenter: React.FC<Props> = ({
           <option value="macho">macho</option>
           <option value="walk">walk</option>
         </select>
-        <input {...register("main")} />
-        <input {...register("sub")} />
+        <input {...register("main")} className={styles.field} />
+        <input {...register("sub")} className={styles.field} />
 
         <button type="submit" className={styles.button}>
           Generate
@@ -56,12 +56,19 @@ const Presenter: React.FC<Props> = ({
         <p className={styles.url} onClick={(e) => handleCopy(e)}>
           {generatedUrl}
         </p>
+      </div>
 
+      <div className={styles.urlWrapper}>
         <p>markdown</p>
         <p className={styles.url} onClick={(e) => handleCopy(e)}>
           {generatedGithubUrl}
         </p>
       </div>
+
+      <div className={styles.descriptionWrapper}>
+        <p className={styles.description}>※URLクリックでコピーできます</p>
+      </div>
+
       <Toast isOpen={isOpenToast} message="クリップボードにコピーしました" />
     </div>
   );
