@@ -1,6 +1,8 @@
 import { SubmitHandler, useFormContext } from "react-hook-form";
 import { FormType } from ".";
 
+import styles from "./index.module.scss";
+
 type Props = {
   imageSrc: string | null;
   generatedUrl: string;
@@ -19,29 +21,15 @@ const Presenter: React.FC<Props> = ({
   const { register, handleSubmit } = useFormContext<FormType>();
 
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-    >
-      <div>
+    <div className={styles.mainWrapper}>
+      <div className={styles.imageWrapper}>
         {imageSrc ? (
           <img src={imageSrc} alt="Generated Image" />
         ) : (
           <p>Loading...</p>
         )}
       </div>
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "right",
-        }}
-      >
+      <form onSubmit={handleSubmit(onSubmit)} className={styles.formWrapper}>
         <select {...register("image")}>
           <option value="happy">happy</option>
           <option value="good">good</option>
@@ -55,37 +43,19 @@ const Presenter: React.FC<Props> = ({
         <input {...register("main")} />
         <input {...register("sub")} />
 
-        <button type="submit">Generate</button>
+        <button type="submit" className={styles.button}>
+          Generate
+        </button>
       </form>
 
-      <div
-        style={{
-          padding: "10px",
-          display: "flex",
-          flexDirection: "column",
-          // gap: "10px",
-          width: "50%",
-        }}
-      >
+      <div className={styles.urlWrapper}>
         <p>URL</p>
-        <p
-          style={{
-            border: "1px solid #ccc",
-            cursor: "pointer",
-          }}
-          onClick={(e) => handleCopy(e)}
-        >
+        <p className={styles.url} onClick={(e) => handleCopy(e)}>
           {generatedUrl}
         </p>
 
         <p>markdown</p>
-        <p
-          style={{
-            border: "1px solid #ccc",
-            cursor: "pointer",
-          }}
-          onClick={(e) => handleCopy(e)}
-        >
+        <p className={styles.url} onClick={(e) => handleCopy(e)}>
           {generatedGithubUrl}
         </p>
       </div>
