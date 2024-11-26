@@ -15,6 +15,7 @@ type Props = {
 
 const Top: React.FC<Props> = ({ pageUrl }) => {
   const [imageSrc, setImageSrc] = useState<string | null>(null);
+  const [isOpenToast, setIsOpenToast] = useState<boolean>(false);
   const [generatedUrl, setGeneratedUrl] = useState<string>("");
   const [generatedGithubUrl, setGeneratedGithubUrl] = useState<string>("");
 
@@ -68,6 +69,10 @@ const Top: React.FC<Props> = ({ pageUrl }) => {
     e: React.MouseEvent<HTMLParagraphElement, MouseEvent>
   ) => {
     navigator.clipboard.writeText(e.currentTarget.innerText);
+    setIsOpenToast(true);
+    setTimeout(() => {
+      setIsOpenToast(false);
+    }, 1500);
   };
 
   return (
@@ -78,6 +83,7 @@ const Top: React.FC<Props> = ({ pageUrl }) => {
         generatedGithubUrl={generatedGithubUrl}
         onSubmit={onSubmit}
         handleCopy={handleCopy}
+        isOpenToast={isOpenToast}
       />
     </FormProvider>
   );

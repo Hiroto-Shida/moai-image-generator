@@ -2,6 +2,7 @@ import { SubmitHandler, useFormContext } from "react-hook-form";
 import { FormType } from ".";
 
 import styles from "./index.module.scss";
+import Toast from "../Toast";
 
 type Props = {
   imageSrc: string | null;
@@ -9,14 +10,16 @@ type Props = {
   generatedGithubUrl: string;
   onSubmit: SubmitHandler<FormType>;
   handleCopy: (e: React.MouseEvent<HTMLParagraphElement, MouseEvent>) => void;
+  isOpenToast: boolean;
 };
 
 const Presenter: React.FC<Props> = ({
+  imageSrc,
   generatedUrl,
   generatedGithubUrl,
   onSubmit,
   handleCopy,
-  imageSrc,
+  isOpenToast,
 }) => {
   const { register, handleSubmit } = useFormContext<FormType>();
 
@@ -59,6 +62,7 @@ const Presenter: React.FC<Props> = ({
           {generatedGithubUrl}
         </p>
       </div>
+      <Toast isOpen={isOpenToast} message="クリップボードにコピーしました" />
     </div>
   );
 };
