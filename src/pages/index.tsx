@@ -6,14 +6,10 @@ import Head from "next/head";
 
 const Page: NextPage<
   InferGetServerSidePropsType<typeof getServerSideProps>
-> = ({ pageUrl, image, main, sub }) => {
-  const name = imagesList.includes(image) ? image : "happy";
-  const url =
-    `/api/${name}` +
-    `${main || sub ? "?" : ""}` +
-    `${main ? `main=${main}` : ""}` +
-    `${main && sub ? "&" : ""}` +
-    `${sub ? `sub=${sub}` : ""}`;
+> = ({ pageUrl, image, queryObj }) => {
+  const imageName = imagesList.includes(image) ? image : "happy";
+  const queryStr = new URLSearchParams(queryObj).toString();
+  const url = queryStr ? `/api/${imageName}?${queryStr}` : `/api/${imageName}`;
 
   return (
     <>
@@ -27,7 +23,12 @@ const Page: NextPage<
         <meta httpEquiv="Pragma" content="no-cache" />
         <meta httpEquiv="Expires" content="0" />
       </Head>
-      <Top pageUrl={pageUrl} />
+      <Top
+        pageUrl={pageUrl}
+        image={imageName}
+        main={queryObj.main}
+        sub={queryObj.sub}
+      />
     </>
   );
 };
@@ -35,8 +36,7 @@ const Page: NextPage<
 interface PageProps {
   pageUrl: string;
   image: string;
-  main: string;
-  sub: string;
+  queryObj: { main?: string; sub?: string };
 }
 
 export const getServerSideProps: GetServerSideProps<PageProps> = async (
@@ -44,15 +44,21 @@ export const getServerSideProps: GetServerSideProps<PageProps> = async (
 ) => {
   // mainクエリパラメータを取得
   const imageQuery = context.query.image;
-  const mainQuery = context.query.main;
-  const subQuery = context.query.sub;
+  const mainQuery =
+    typeof context.query.main === "string" ? context.query.main : "";
+  const subQuery =
+    typeof context.query.sub === "string" ? context.query.sub : "";
+
+  const queryObj: { main?: string; sub?: string } = {};
+
+  if (mainQuery) queryObj.main = mainQuery;
+  if (subQuery) queryObj.sub = subQuery;
 
   return {
     props: {
       pageUrl: process.env.NEXT_PUBLIC_VERCEL_URL || "",
       image: typeof imageQuery === "string" ? imageQuery : "",
-      main: typeof mainQuery === "string" ? mainQuery : "",
-      sub: typeof subQuery === "string" ? subQuery : "",
+      queryObj: queryObj,
     },
   };
 };
