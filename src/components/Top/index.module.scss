@@ -1,0 +1,51 @@
+.mainWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.imageWrapper {
+  padding: 10px;
+}
+
+.formWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: right;
+  margin-top: 10px;
+  gap: 10px;
+
+  > .button {
+    padding: 10px;
+    border: 1px solid #000000;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: ease 0.2s;
+
+    &:hover {
+      background-color: #b5b5b5;
+    }
+
+    &:active {
+      background-color: #969696;
+    }
+  }
+}
+
+.urlWrapper {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+
+  > .url {
+    border: 1px solid #ccc;
+    cursor: pointer;
+    transition: ease 0.2s;
+
+    &:active {
+      background-color: #ababab;
+    }
+  }
+}
