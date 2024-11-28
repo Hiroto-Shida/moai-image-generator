@@ -25,6 +25,7 @@ const Presenter: React.FC<Props> = ({
 
   return (
     <div className={styles.mainWrapper}>
+      <input type="color" />
       <div className={styles.imageWrapper}>
         {imageSrc ? (
           <img src={imageSrc} alt="Generated Image" />
