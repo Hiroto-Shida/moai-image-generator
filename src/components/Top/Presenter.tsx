@@ -25,7 +25,6 @@ const Presenter: React.FC<Props> = ({
 
   return (
     <div className={styles.mainWrapper}>
-      <input type="color" />
       <div className={styles.imageWrapper}>
         {imageSrc ? (
           <img src={imageSrc} alt="Generated Image" />
@@ -43,6 +42,7 @@ const Presenter: React.FC<Props> = ({
           <option value="fight">fight</option>
           <option value="macho">macho</option>
           <option value="walk">walk</option>
+          <option value="cry">cry</option>
         </select>
         <div className={styles.colorWrapper}>
           <div className={styles.color}>
