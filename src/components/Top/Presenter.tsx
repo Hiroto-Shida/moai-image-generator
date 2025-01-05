@@ -44,6 +44,16 @@ const Presenter: React.FC<Props> = ({
           <option value="macho">macho</option>
           <option value="walk">walk</option>
         </select>
+        <div className={styles.colorWrapper}>
+          <div className={styles.color}>
+            <label htmlFor="color1">Color1</label>
+            <input type="color" id="color1" {...register("c1")} />
+          </div>
+          <div className={styles.color}>
+            <label htmlFor="color2">Color2</label>
+            <input type="color" id="color2" {...register("c2")} />
+          </div>
+        </div>
         <input {...register("main")} className={styles.field} />
         <input {...register("sub")} className={styles.field} />
 

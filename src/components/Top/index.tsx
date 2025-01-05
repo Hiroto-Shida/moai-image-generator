@@ -5,18 +5,26 @@ import Presenter from "./Presenter";
 
 export type FormType = {
   image: string;
+  c1: string;
+  c2: string;
   main: string;
   sub: string;
 };
 
-type Props = {
-  pageUrl: string;
+type ImageOptionsType = {
   image: string;
+  c1?: string;
+  c2?: string;
   main?: string;
   sub?: string;
 };
 
-const Top: React.FC<Props> = ({ pageUrl, image, main, sub }) => {
+type Props = {
+  pageUrl: string;
+  imageOptions: ImageOptionsType;
+};
+
+const Top: React.FC<Props> = ({ pageUrl, imageOptions }) => {
   const [imageSrc, setImageSrc] = useState<string | null>(null);
   const [isOpenToast, setIsOpenToast] = useState<boolean>(false);
   const [generatedUrl, setGeneratedUrl] = useState<string>("");
@@ -25,17 +33,26 @@ const Top: React.FC<Props> = ({ pageUrl, image, main, sub }) => {
   const methods = useForm<FormType>({
     mode: "onChange",
     defaultValues: {
-      image: image,
-      main: main || "LGTM",
-      sub: sub || "Looks Good To Me",
+      image: imageOptions.image,
+      c1: imageOptions.c1 || "#ff7e5f",
+      c2: imageOptions.c2 || "#feb47b",
+      main: imageOptions.main || "LGTM",
+      sub: imageOptions.sub || "Looks Good To Me",
     },
   });
 
   const fetchImage = useCallback(
-    async (image: string, main: string, sub: string) => {
+    async ({ image, c1, c2, main, sub }: ImageOptionsType) => {
       const imageName = imagesList.includes(image) ? image : "happy";
 
-      const queryObj: { main?: string; sub?: string } = {};
+      const queryObj: {
+        c1?: string;
+        c2?: string;
+        main?: string;
+        sub?: string;
+      } = {};
+      if (c1) queryObj.c1 = c1;
+      if (c2) queryObj.c2 = c2;
       if (main) queryObj.main = main;
       if (sub) queryObj.sub = sub;
       const queryStr = new URLSearchParams(queryObj).toString();
@@ -63,11 +80,11 @@ const Top: React.FC<Props> = ({ pageUrl, image, main, sub }) => {
   );
 
   useEffect(() => {
-    fetchImage(image, main || "", sub || "");
-  }, [fetchImage, image, main, sub]);
+    fetchImage(imageOptions);
+  }, [fetchImage, imageOptions]);
 
   const onSubmit: SubmitHandler<FormType> = (data) => {
-    fetchImage(data.image, data.main, data.sub);
+    fetchImage(data);
   };
 
   const handleCopy = (
