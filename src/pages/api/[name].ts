@@ -14,6 +14,8 @@ export default async function handler(req: NextRequest) {
 
   const inputName = pathname.split("/").pop() || "happy";
   const name = imagesList.includes(inputName) ? inputName : "happy";
+  const c1 = searchParams.get("c1") || "#ff7e5f";
+  const c2 = searchParams.get("c2") || "#feb47b";
   const main = searchParams.get("main") || "LGTM";
   const sub = searchParams.get("sub") || "Looks Good To Me";
   const imagePath = `${process.env.NEXT_PUBLIC_VERCEL_URL}/images/${name}.png`;
@@ -21,7 +23,7 @@ export default async function handler(req: NextRequest) {
   const size = 400;
 
   const response = new ImageResponse(
-    React.createElement(OgpComponent, { main, sub, imagePath, size }),
+    React.createElement(OgpComponent, { imagePath, c1, c2, main, sub, size }),
     {
       width: size,
       height: size,

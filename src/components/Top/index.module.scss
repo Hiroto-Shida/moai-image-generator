@@ -53,6 +53,15 @@
   }
 }
 
+.colorWrapper {
+  display: flex;
+
+  > .color {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
 .urlWrapper {
   margin-top: 10px;
   display: flex;

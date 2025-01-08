@@ -1,13 +1,22 @@
 import MoaiImage from "../MoaiImage";
 
 type Props = {
+  imagePath: string;
+  c1: string;
+  c2: string;
   main: string;
   sub: string;
-  imagePath: string;
   size: number;
 };
 
-const OgpComponent: React.FC<Props> = ({ main, sub, imagePath, size }) => {
+const OgpComponent: React.FC<Props> = ({
+  imagePath,
+  c1,
+  c2,
+  main,
+  sub,
+  size,
+}) => {
   const fontColor = "#ffffff";
   const shadowColor = "#000000";
 
@@ -20,7 +29,7 @@ const OgpComponent: React.FC<Props> = ({ main, sub, imagePath, size }) => {
           position: "relative",
           display: "flex",
           justifyContent: "center",
-          background: "linear-gradient(to right, #ff7e5f, #feb47b)",
+          background: `linear-gradient(to right, ${c1}, ${c2})`,
         }}
       >
         <MoaiImage

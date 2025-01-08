@@ -7,4 +7,5 @@ export const imagesList = [
   "happy",
   "macho",
   "walk",
+  "cry",
 ];
