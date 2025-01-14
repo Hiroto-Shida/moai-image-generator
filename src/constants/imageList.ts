@@ -1,4 +1,4 @@
-export const imagesList = [
+export const IMAGE_LIST = [
   "appear",
   "bow",
   "dance",
@@ -8,4 +8,4 @@ export const imagesList = [
   "macho",
   "walk",
   "cry",
-];
+] as const;

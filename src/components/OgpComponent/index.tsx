@@ -1,24 +1,28 @@
 import MoaiImage from "../MoaiImage";
 
-type Props = {
+export type OgpComponentProps = {
   imagePath: string;
   c1: string;
   c2: string;
   main: string;
   sub: string;
   size: number;
+  isOgp?: boolean;
 };
 
-const OgpComponent: React.FC<Props> = ({
+const OgpComponent: React.FC<OgpComponentProps> = ({
   imagePath,
   c1,
   c2,
   main,
   sub,
   size,
+  isOgp = true,
 }) => {
   const fontColor = "#ffffff";
   const shadowColor = "#000000";
+  const maSd = isOgp ? 2 : 0.5;
+  const suSd = isOgp ? 1 : 0.5;
 
   return (
     <>
@@ -45,35 +49,37 @@ const OgpComponent: React.FC<Props> = ({
             alignItems: "center",
             position: "absolute",
             top: "60%",
+            zIndex: "1",
           }}
         >
-          <p
+          <span
             style={{
               color: fontColor,
               margin: 0,
-              fontSize: "100px",
-              lineHeight: "100%",
-              letterSpacing: "3px",
-              whiteSpace: "pre-wrap",
+              fontSize: `${size * 0.25}px`,
+              lineHeight: isOgp ? "90%" : "100%",
+              whiteSpace: "nowrap",
               fontWeight: "bold",
-              fontFamily: "Roboto, sans-serif",
-              textShadow: `2px 2px 0 ${fontColor}, -2px -2px 0 ${fontColor}, 2px -2px 0 ${fontColor}, -2px 2px 0 ${fontColor},
-            4px 4px 0 ${shadowColor}, -4px -4px 0 ${shadowColor}, 4px -4px 0 ${shadowColor}, -4px 4px 0 ${shadowColor}`,
+              fontFamily: "M PLUS 1p, sans-serif",
+              textShadow: `${maSd}px ${maSd}px 0 ${shadowColor}, -${maSd}px -${maSd}px 0 ${shadowColor}, ${maSd}px -${maSd}px 0 ${shadowColor}, -${maSd}px ${maSd}px 0 ${shadowColor}`,
               zIndex: "2",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
             }}
           >
             {main}
-          </p>
+          </span>
           <p
             style={{
               color: fontColor,
               margin: 0,
-              fontSize: "33px",
+              fontSize: `${size * 0.08}px`,
               lineHeight: "100%",
-              whiteSpace: "pre-wrap",
+              whiteSpace: "nowrap",
               fontWeight: "bold",
-              fontFamily: "Roboto, sans-serif",
-              textShadow: `1px 1px 0 ${shadowColor}, -1px -1px 0 ${shadowColor}, 1px -1px 0 ${shadowColor}, -1px 1px 0 ${shadowColor}`,
+              fontFamily: "M PLUS 1p, sans-serif",
+              textShadow: `${suSd}px ${suSd}px 0 ${shadowColor}, -${suSd}px -${suSd}px 0 ${shadowColor}, ${suSd}px -${suSd}px 0 ${shadowColor}, -${suSd}px ${suSd}px 0 ${shadowColor}`,
               zIndex: "2",
             }}
           >

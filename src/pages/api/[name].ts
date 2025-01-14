@@ -2,8 +2,8 @@ import { ImageResponse } from "@vercel/og";
 import OgpComponent from "../../components/OgpComponent";
 import React from "react";
 import { NextRequest } from "next/server";
-import { robotoBold } from "../../../public/roboto_bold";
-import { imagesList } from "@/constants/imageList";
+import { loadGoogleFont } from "@/utils/font";
+import { isImageName } from "@/utils/image";
 
 export const config = {
   runtime: "edge",
@@ -13,14 +13,16 @@ export default async function handler(req: NextRequest) {
   const { searchParams, pathname } = new URL(req.url);
 
   const inputName = pathname.split("/").pop() || "happy";
-  const name = imagesList.includes(inputName) ? inputName : "happy";
+  const name = isImageName(inputName) ? inputName : "happy";
   const c1 = searchParams.get("c1") || "#ff7e5f";
   const c2 = searchParams.get("c2") || "#feb47b";
   const main = searchParams.get("main") || "LGTM";
-  const sub = searchParams.get("sub") || "Looks Good To Me";
+  const sub = searchParams.get("sub") || "Looks Good To Moai";
   const imagePath = `${process.env.NEXT_PUBLIC_VERCEL_URL}/images/${name}.png`;
 
   const size = 400;
+
+  const fontData = await loadGoogleFont("M+PLUS+1p", main + sub);
 
   const response = new ImageResponse(
     React.createElement(OgpComponent, { imagePath, c1, c2, main, sub, size }),
@@ -29,10 +31,10 @@ export default async function handler(req: NextRequest) {
       height: size,
       fonts: [
         {
-          name: "Roboto",
-          data: Buffer.from(robotoBold.split(",")[1], "base64"),
+          name: "M PLUS 1p",
+          data: fontData,
           style: "normal",
-          weight: 400,
+          weight: 700,
         },
       ],
     }

@@ -1,6 +1,9 @@
-import Top from "@/components/Top";
-import { imagesList } from "@/constants/imageList";
+import Main from "@/components/topPage/Main";
+import { IMAGE_LIST } from "@/constants/imageList";
+import { ImageOptionsType } from "@/types/ImageOptionsType";
+import { Partial } from "@/types/Partial";
 import { getQuery } from "@/utils/getQuery";
+import { isImageName } from "@/utils/image";
 import { InferGetServerSidePropsType, NextPage } from "next";
 import { GetServerSideProps, GetServerSidePropsContext } from "next";
 import Head from "next/head";
@@ -8,7 +11,9 @@ import Head from "next/head";
 const Page: NextPage<
   InferGetServerSidePropsType<typeof getServerSideProps>
 > = ({ pageUrl, image, queryObj }) => {
-  const imageName = imagesList.includes(image) ? image : "happy";
+  const imageName: (typeof IMAGE_LIST)[number] = isImageName(image)
+    ? image
+    : "happy";
   const queryStr = new URLSearchParams(queryObj).toString();
   const url = queryStr ? `/api/${imageName}?${queryStr}` : `/api/${imageName}`;
 
@@ -24,7 +29,7 @@ const Page: NextPage<
         <meta httpEquiv="Pragma" content="no-cache" />
         <meta httpEquiv="Expires" content="0" />
       </Head>
-      <Top
+      <Main
         pageUrl={pageUrl}
         imageOptions={{
           image: imageName,
@@ -38,12 +43,8 @@ const Page: NextPage<
   );
 };
 
-type QueryObjType = {
-  c1?: string;
-  c2?: string;
-  main?: string;
-  sub?: string;
-};
+type QueryObjType = Partial<Omit<ImageOptionsType, "image">>;
+
 interface PageProps {
   pageUrl: string;
   image: string;
