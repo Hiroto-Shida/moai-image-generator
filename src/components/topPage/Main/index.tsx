@@ -14,9 +14,10 @@ type Props = {
   imageOptions: {
     image: (typeof IMAGE_LIST)[number];
   } & Partial<Omit<ImageOptionsType, "image">>;
+  lineLists: ImageOptionsType[][];
 };
 
-const Main: React.FC<Props> = ({ pageUrl, imageOptions }) => {
+const Main: React.FC<Props> = ({ pageUrl, imageOptions, lineLists }) => {
   // const [imageSrc, setImageSrc] = useState<string | null>(null);
   // const [isOpenToast, setIsOpenToast] = useState<boolean>(false);
   // const [generatedUrl, setGeneratedUrl] = useState<string>("");
@@ -120,6 +121,7 @@ const Main: React.FC<Props> = ({ pageUrl, imageOptions }) => {
         }}
         onSubmit={onSubmit}
         handleClickImage={handleClickImage}
+        lineLists={lineLists}
         // handleCopy={handleCopy}
         // isOpenToast={isOpenToast}
       />

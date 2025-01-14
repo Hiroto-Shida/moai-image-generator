@@ -3,14 +3,14 @@ import { IMAGE_LIST } from "@/constants/imageList";
 import { ImageOptionsType } from "@/types/ImageOptionsType";
 import { Partial } from "@/types/Partial";
 import { getQuery } from "@/utils/getQuery";
-import { isImageName } from "@/utils/image";
+import { isImageName, randomImage } from "@/utils/image";
 import { InferGetServerSidePropsType, NextPage } from "next";
 import { GetServerSideProps, GetServerSidePropsContext } from "next";
 import Head from "next/head";
 
 const Page: NextPage<
   InferGetServerSidePropsType<typeof getServerSideProps>
-> = ({ pageUrl, image, queryObj }) => {
+> = ({ pageUrl, image, queryObj, lineLists }) => {
   const imageName: (typeof IMAGE_LIST)[number] = isImageName(image)
     ? image
     : "happy";
@@ -38,6 +38,7 @@ const Page: NextPage<
           main: queryObj.main,
           sub: queryObj.sub,
         }}
+        lineLists={lineLists}
       />
     </>
   );
@@ -49,12 +50,15 @@ interface PageProps {
   pageUrl: string;
   image: string;
   queryObj: QueryObjType;
+  lineLists: ImageOptionsType[][];
 }
 
 export const getServerSideProps: GetServerSideProps<PageProps> = async (
   context: GetServerSidePropsContext
 ) => {
-  // mainクエリパラメータを取得
+  /**
+   * クエリパラメータを取得と整理
+   */
   const imageQuery = getQuery(context.query.image);
   const c1Query = getQuery(context.query.c1);
   const c2Query = getQuery(context.query.c2);
@@ -68,11 +72,29 @@ export const getServerSideProps: GetServerSideProps<PageProps> = async (
   if (mainQuery) queryObj.main = mainQuery;
   if (subQuery) queryObj.sub = subQuery;
 
+  /**
+   * Sampleに表示する画像を生成
+   */
+  const lineLists: ImageOptionsType[][] = [];
+
+  const createLineList: () => ImageOptionsType[] = () => {
+    const oneLineList: ImageOptionsType[] = [];
+    for (let i = 0; i < 5; i++) {
+      oneLineList.push(randomImage());
+    }
+    return oneLineList.concat(oneLineList);
+  };
+
+  lineLists.push(createLineList());
+  lineLists.push(createLineList());
+  lineLists.push(createLineList());
+
   return {
     props: {
       pageUrl: process.env.NEXT_PUBLIC_VERCEL_URL || "",
       image: imageQuery,
       queryObj: queryObj,
+      lineLists,
     },
   };
 };

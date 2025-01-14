@@ -3,7 +3,6 @@ import styles from "./index.module.scss";
 import { IMAGE_LIST } from "@/constants/imageList";
 import React from "react";
 import { ImageOptionsType } from "@/types/ImageOptionsType";
-import { randomImage } from "@/utils/image";
 import clsx from "clsx";
 
 type LineComponentProps = {
@@ -48,45 +47,30 @@ const LineComponent: React.FC<LineComponentProps> = ({
   );
 };
 
-const createLineList: () => ImageOptionsType[] = () => {
-  const oneLineList: ImageOptionsType[] = [];
-  for (let i = 0; i < 5; i++) {
-    oneLineList.push(randomImage());
-  }
-  return oneLineList.concat(oneLineList);
-};
-
 type SampleProps = {
   pageUrl: string;
   handleClickImage: (data: ImageOptionsType) => void;
+  lineLists: ImageOptionsType[][];
 };
 
-const Sample: React.FC<SampleProps> = ({ pageUrl, handleClickImage }) => {
-  const firstLineList = createLineList();
-  const secondLineList = createLineList();
-  const thirdLineList = createLineList();
-
+const Sample: React.FC<SampleProps> = ({
+  pageUrl,
+  handleClickImage,
+  lineLists,
+}) => {
   return (
     <div className={styles.sampleWrapper}>
-      <LineComponent
-        pageUrl={pageUrl}
-        handleClickImage={handleClickImage}
-        lineList={firstLineList}
-      />
-      <LineComponent
-        pageUrl={pageUrl}
-        handleClickImage={handleClickImage}
-        // delayして表示するため最後の空白に先頭の要素を追加
-        lineList={secondLineList.concat(secondLineList[0])}
-        delay
-      />
-      <LineComponent
-        pageUrl={pageUrl}
-        handleClickImage={handleClickImage}
-        lineList={thirdLineList}
-      />
+      {lineLists.map((lineList, index) => (
+        <LineComponent
+          key={index}
+          pageUrl={pageUrl}
+          handleClickImage={handleClickImage}
+          lineList={index % 2 === 1 ? lineList.concat(lineList[0]) : lineList}
+          delay={index % 2 === 1}
+        />
+      ))}
     </div>
   );
 };
 
-export default React.memo(Sample);
+export default Sample;

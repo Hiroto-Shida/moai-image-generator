@@ -5,6 +5,7 @@ import styles from "./index.module.scss";
 import Customize from "../Customize";
 import Sample from "../Sample";
 import { ImageOptionsType } from "@/types/ImageOptionsType";
+import React from "react";
 
 type Props = {
   // imageSrc: string | null;
@@ -16,6 +17,7 @@ type Props = {
   // handleCopy: (e: React.MouseEvent<HTMLParagraphElement, MouseEvent>) => void;
   // isOpenToast: boolean;
   handleClickImage: (data: ImageOptionsType) => void;
+  lineLists: ImageOptionsType[][];
 };
 
 const Presenter: React.FC<Props> = ({
@@ -28,6 +30,7 @@ const Presenter: React.FC<Props> = ({
   // handleCopy,
   // isOpenToast,
   handleClickImage,
+  lineLists,
 }) => {
   return (
     <div className={styles.bodyWrapper}>
@@ -36,7 +39,11 @@ const Presenter: React.FC<Props> = ({
         imageOptions={imageOptions}
         onSubmit={onSubmit}
       />
-      <Sample pageUrl={pageUrl} handleClickImage={handleClickImage} />
+      <Sample
+        pageUrl={pageUrl}
+        handleClickImage={handleClickImage}
+        lineLists={lineLists}
+      />
     </div>
   );
 };
