@@ -23,16 +23,14 @@
 }
 
 .imageWrapper {
-  width: 100%;
-  aspect-ratio: 1 / 1;
+  width: 250px;
+  height: 250px;
   box-shadow: $box-shadow-black-4;
-
-  > .image {
-    width: 100%;
-  }
+  overflow: hidden;
 }
 
 .formWrapper {
+  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: right;
