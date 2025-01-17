@@ -1,0 +1,113 @@
+import styles from "./index.module.scss";
+import ClearIcon from "../../assets/icons/clear.svg";
+import { Dialog, DialogPanel } from "@headlessui/react";
+import UrlButton from "../button/UrlButton";
+import { M_PLUS_1 } from "next/font/google";
+import clsx from "clsx";
+import Label from "../form/Label";
+import Caption from "../Caption";
+import Button from "../button/Button";
+import FormRange from "../form/FormRange";
+import { FormProvider, useForm } from "react-hook-form";
+import { useImageSizeStore } from "@/stores/useImageSizeStore";
+
+const mPlus1 = M_PLUS_1({
+  subsets: ["latin"],
+});
+
+type RangeFormType = {
+  size: string;
+};
+
+type ExportModalProps = {
+  isOpen: boolean;
+  onClose: () => void;
+  imageSrc: string | null;
+  urls: { ogpUrl: string; imageUrl: string };
+  handleCopy: (text: string) => void;
+};
+
+const ExportModal: React.FC<ExportModalProps> = ({
+  isOpen,
+  onClose,
+  imageSrc,
+  urls,
+  handleCopy,
+}) => {
+  const size = useImageSizeStore((state) => state.size);
+  const setSize = useImageSizeStore((state) => state.setSize);
+
+  const methods = useForm<RangeFormType>({
+    mode: "onChange",
+    defaultValues: {
+      size: String(size),
+    },
+  });
+
+  const { control } = methods;
+
+  // TODO: 下から出るようなanimationにしたい headless uiのtransition使う
+  return (
+    <Dialog
+      open={isOpen}
+      onClose={onClose}
+      className={clsx(mPlus1.className, styles.dialogWrapper)}
+    >
+      <div className={styles.backGround}>
+        <DialogPanel className={styles.modalWrapper}>
+          <button className={styles.close} type="button" onClick={onClose}>
+            <ClearIcon />
+          </button>
+          <div className={styles.imageWrapper}>
+            {imageSrc ? (
+              <img
+                src={imageSrc}
+                alt="Generated Image"
+                className={styles.image}
+              />
+            ) : (
+              // TODO: スケルトンスクリーンを表示(モアイ柄でも)
+              <p>Generating Image...</p>
+            )}
+          </div>
+          <div className={styles.urlsWrapper}>
+            <FormProvider {...methods}>
+              <FormRange
+                label={`Image Size: ${size}px`}
+                control={control}
+                name="size"
+                inputRange={{
+                  min: 100,
+                  max: 400,
+                  step: 50,
+                }}
+                onChange={(value) => setSize(Number(value))}
+              />
+            </FormProvider>
+            <div className={styles.url}>
+              <Label variant="black">URL</Label>
+              <UrlButton
+                url={urls.ogpUrl}
+                handleClick={(text) => handleCopy(text)}
+              />
+              <Caption>Use to preview image (OGP) on SNS</Caption>
+            </div>
+            <div className={styles.url}>
+              <Label variant="black">Image URL</Label>
+              <UrlButton
+                url={urls.imageUrl}
+                handleClick={(text) => handleCopy(text)}
+              />
+              <Caption>e.g. Use as LGTM images on GitHub.</Caption>
+            </div>
+          </div>
+          <Button variant="primary" onClick={() => {}}>
+            Download(PNG)
+          </Button>
+        </DialogPanel>
+      </div>
+    </Dialog>
+  );
+};
+
+export default ExportModal;
