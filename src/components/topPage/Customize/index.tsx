@@ -3,12 +3,12 @@ import FormColor from "@/components/form/FormColor";
 import FormInput from "@/components/form/FormInput";
 import FormSelect from "@/components/form/FormSelect";
 
-import styles from "./index.module.scss";
+import OgpComponent from "@/components/OgpComponent";
+import { IMAGE_LIST } from "@/constants/imageList";
+import { ImageOptionsType } from "@/types/ImageOptionsType";
 import { SubmitHandler, useFormContext } from "react-hook-form";
 import { FormType } from "../Main";
-import OgpComponent from "@/components/OgpComponent";
-import { ImageOptionsType } from "@/types/ImageOptionsType";
-import { IMAGE_LIST } from "@/constants/imageList";
+import styles from "./index.module.scss";
 
 type CustomizeProps = {
   imageOptions: Omit<ImageOptionsType, "size">;

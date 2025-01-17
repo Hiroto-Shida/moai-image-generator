@@ -1,9 +1,9 @@
 import OgpComponent from "@/components/OgpComponent";
-import styles from "./index.module.scss";
 import { IMAGE_LIST } from "@/constants/imageList";
-import React from "react";
 import { ImageOptionsType } from "@/types/ImageOptionsType";
 import clsx from "clsx";
+import React from "react";
+import styles from "./index.module.scss";
 
 type LineComponentProps = {
   handleClickImage: (data: ImageOptionsType) => void;

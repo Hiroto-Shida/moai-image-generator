@@ -1,15 +1,15 @@
-import styles from "./index.module.scss";
-import ClearIcon from "../../assets/icons/clear.svg";
+import { useImageSizeStore } from "@/stores/useImageSizeStore";
 import { Dialog, DialogPanel } from "@headlessui/react";
-import UrlButton from "../button/UrlButton";
-import { M_PLUS_1 } from "next/font/google";
 import clsx from "clsx";
-import Label from "../form/Label";
+import { M_PLUS_1 } from "next/font/google";
+import { FormProvider, useForm } from "react-hook-form";
+import ClearIcon from "../../assets/icons/clear.svg";
 import Caption from "../Caption";
 import Button from "../button/Button";
+import UrlButton from "../button/UrlButton";
 import FormRange from "../form/FormRange";
-import { FormProvider, useForm } from "react-hook-form";
-import { useImageSizeStore } from "@/stores/useImageSizeStore";
+import Label from "../form/Label";
+import styles from "./index.module.scss";
 
 const mPlus1 = M_PLUS_1({
   subsets: ["latin"],

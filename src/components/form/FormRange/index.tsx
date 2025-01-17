@@ -1,3 +1,4 @@
+import { useCallback, useEffect, useRef } from "react";
 import {
   Control,
   Controller,
@@ -7,7 +8,6 @@ import {
 } from "react-hook-form";
 import Label from "../Label";
 import styles from "./index.module.scss";
-import { useCallback, useEffect, useRef } from "react";
 
 type FormRangeProps<TFieldValues extends FieldValues> = Omit<
   React.ComponentProps<"input">,

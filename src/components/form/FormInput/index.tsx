@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import {
   Control,
   Controller,
@@ -6,10 +7,9 @@ import {
   useFormContext,
   useWatch,
 } from "react-hook-form";
+import ClearIcon from "../../../assets/icons/clear.svg";
 import Label from "../Label";
 import styles from "./index.module.scss";
-import ClearIcon from "../../../assets/icons/clear.svg";
-import clsx from "clsx";
 
 type FormInputProps<TFieldValues extends FieldValues> = Omit<
   React.ComponentProps<"input">,

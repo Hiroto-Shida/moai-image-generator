@@ -4,8 +4,12 @@ import { ImageOptionsType } from "@/types/ImageOptionsType";
 import { Partial } from "@/types/Partial";
 import { getQuery } from "@/utils/getQuery";
 import { isImageName, randomImage } from "@/utils/image";
-import { InferGetServerSidePropsType, NextPage } from "next";
-import { GetServerSideProps, GetServerSidePropsContext } from "next";
+import {
+  GetServerSideProps,
+  GetServerSidePropsContext,
+  InferGetServerSidePropsType,
+  NextPage,
+} from "next";
 import Head from "next/head";
 
 const Page: NextPage<

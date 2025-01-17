@@ -1,11 +1,11 @@
 import { SubmitHandler } from "react-hook-form";
 import { FormType } from ".";
 
-import styles from "./index.module.scss";
-import Customize from "../Customize";
-import Sample from "../Sample";
 import { ImageOptionsType } from "@/types/ImageOptionsType";
 import React from "react";
+import Customize from "../Customize";
+import Sample from "../Sample";
+import styles from "./index.module.scss";
 
 type Props = {
   imageOptions: Omit<ImageOptionsType, "size">;

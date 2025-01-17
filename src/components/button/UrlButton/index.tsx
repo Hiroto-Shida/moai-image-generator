@@ -1,5 +1,5 @@
-import styles from "./index.module.scss";
 import CopyIcon from "../../../assets/icons/copy.svg";
+import styles from "./index.module.scss";
 
 type UrlButtonProps = {
   url: string;

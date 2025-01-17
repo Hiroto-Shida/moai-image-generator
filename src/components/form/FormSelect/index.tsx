@@ -1,7 +1,7 @@
 import { Control, Controller, FieldPath, FieldValues } from "react-hook-form";
+import SelectIcon from "../../../assets/icons/select.svg";
 import Label from "../Label";
 import styles from "./index.module.scss";
-import SelectIcon from "../../../assets/icons/select.svg";
 
 type OptionType = {
   value: string;

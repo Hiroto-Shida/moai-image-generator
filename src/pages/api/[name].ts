@@ -1,11 +1,11 @@
-import { ImageResponse } from "@vercel/og";
-import OgpComponent from "../../components/OgpComponent";
-import React from "react";
-import { NextRequest } from "next/server";
+import { DEFAULT_IMAGE_OPTIONS } from "@/constants/imageOptions";
+import { DEFAULT_IMAGE_SIZE } from "@/constants/imageSize";
 import { loadGoogleFont } from "@/utils/font";
 import { isImageName } from "@/utils/image";
-import { DEFAULT_IMAGE_SIZE } from "@/constants/imageSize";
-import { DEFAULT_IMAGE_OPTIONS } from "@/constants/imageOptions";
+import { ImageResponse } from "@vercel/og";
+import { NextRequest } from "next/server";
+import React from "react";
+import OgpComponent from "../../components/OgpComponent";
 
 export const config = {
   runtime: "edge",
