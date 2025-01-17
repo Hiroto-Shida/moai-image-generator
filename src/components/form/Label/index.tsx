@@ -3,7 +3,7 @@ import clsx from "clsx";
 import styles from "./index.module.scss";
 
 type LabelProps = {
-  htmlFor: string;
+  htmlFor?: string;
   variant: "black" | "gray";
   children: React.ReactNode;
 };
