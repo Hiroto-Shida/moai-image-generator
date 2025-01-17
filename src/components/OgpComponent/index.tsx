@@ -2,21 +2,21 @@ import MoaiImage from "../MoaiImage";
 
 export type OgpComponentProps = {
   imagePath: string;
+  size: number;
   c1: string;
   c2: string;
   main: string;
   sub: string;
-  size: number;
   isOgp?: boolean;
 };
 
 const OgpComponent: React.FC<OgpComponentProps> = ({
   imagePath,
+  size,
   c1,
   c2,
   main,
   sub,
-  size,
   isOgp = true,
 }) => {
   const fontColor = "#ffffff";

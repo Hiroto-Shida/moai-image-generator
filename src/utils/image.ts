@@ -1,4 +1,6 @@
 import { IMAGE_LIST } from "@/constants/imageList";
+import { DEFAULT_IMAGE_OPTIONS } from "@/constants/imageOptions";
+import { DEFAULT_IMAGE_SIZE } from "@/constants/imageSize";
 import { ImageOptionsType } from "@/types/ImageOptionsType";
 
 type ImageListType = typeof IMAGE_LIST;
@@ -8,8 +10,9 @@ export const isImageName = (value: string): value is ImageListType[number] => {
 };
 
 export const randomImage = (): ImageOptionsType => {
-  const main = "LGTM";
-  const sub = "Looks Good To Moai";
+  // TODO: 文字もランダムにする
+  const main = DEFAULT_IMAGE_OPTIONS.main;
+  const sub = DEFAULT_IMAGE_OPTIONS.sub;
 
   const colorHex = (num: number) =>
     ("0" + Math.min(Math.max(0, num), 255).toString(16)).slice(-2);
@@ -24,6 +27,7 @@ export const randomImage = (): ImageOptionsType => {
 
   return {
     image: image,
+    size: String(DEFAULT_IMAGE_SIZE),
     c1: "#" + colorHex(cr1) + colorHex(cg1) + colorHex(cb1),
     c2: "#" + colorHex(cr2) + colorHex(cg2) + colorHex(cb2),
     main,

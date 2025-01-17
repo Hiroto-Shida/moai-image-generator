@@ -8,42 +8,22 @@ import { ImageOptionsType } from "@/types/ImageOptionsType";
 import React from "react";
 
 type Props = {
-  // imageSrc: string | null;
-  // generatedUrl: string;
-  // generatedGithubUrl: string;
-  pageUrl: string;
-  imageOptions: ImageOptionsType;
+  imageOptions: Omit<ImageOptionsType, "size">;
   onSubmit: SubmitHandler<FormType>;
-  // handleCopy: (e: React.MouseEvent<HTMLParagraphElement, MouseEvent>) => void;
-  // isOpenToast: boolean;
   handleClickImage: (data: ImageOptionsType) => void;
   lineLists: ImageOptionsType[][];
 };
 
 const Presenter: React.FC<Props> = ({
-  // imageSrc,
-  // generatedUrl,
-  // generatedGithubUrl,
-  pageUrl,
   imageOptions,
   onSubmit,
-  // handleCopy,
-  // isOpenToast,
   handleClickImage,
   lineLists,
 }) => {
   return (
     <div className={styles.bodyWrapper}>
-      <Customize
-        pageUrl={pageUrl}
-        imageOptions={imageOptions}
-        onSubmit={onSubmit}
-      />
-      <Sample
-        pageUrl={pageUrl}
-        handleClickImage={handleClickImage}
-        lineLists={lineLists}
-      />
+      <Customize imageOptions={imageOptions} onSubmit={onSubmit} />
+      <Sample handleClickImage={handleClickImage} lineLists={lineLists} />
     </div>
   );
 };

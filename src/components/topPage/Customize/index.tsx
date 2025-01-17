@@ -11,18 +11,13 @@ import { ImageOptionsType } from "@/types/ImageOptionsType";
 import { IMAGE_LIST } from "@/constants/imageList";
 
 type CustomizeProps = {
-  pageUrl: string;
-  imageOptions: ImageOptionsType;
+  imageOptions: Omit<ImageOptionsType, "size">;
   onSubmit: SubmitHandler<FormType>;
 };
-const Customize: React.FC<CustomizeProps> = ({
-  pageUrl,
-  imageOptions,
-  onSubmit,
-}) => {
+const Customize: React.FC<CustomizeProps> = ({ imageOptions, onSubmit }) => {
   const { handleSubmit, control } = useFormContext<FormType>();
 
-  const imagePath = `${pageUrl}/images/${imageOptions.image}.png`;
+  const imagePath = `/images/${imageOptions.image}.png`;
 
   return (
     <div className={styles.topWrapper}>
@@ -63,7 +58,7 @@ const Customize: React.FC<CustomizeProps> = ({
           name="sub"
           maxLength={100}
         />
-        <Button variant="black" type="button">
+        <Button variant="black" type="submit">
           Export
         </Button>
       </form>

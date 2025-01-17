@@ -4,6 +4,8 @@ import React from "react";
 import { NextRequest } from "next/server";
 import { loadGoogleFont } from "@/utils/font";
 import { isImageName } from "@/utils/image";
+import { DEFAULT_IMAGE_SIZE } from "@/constants/imageSize";
+import { DEFAULT_IMAGE_OPTIONS } from "@/constants/imageOptions";
 
 export const config = {
   runtime: "edge",
@@ -12,20 +14,29 @@ export const config = {
 export default async function handler(req: NextRequest) {
   const { searchParams, pathname } = new URL(req.url);
 
-  const inputName = pathname.split("/").pop() || "happy";
-  const name = isImageName(inputName) ? inputName : "happy";
-  const c1 = searchParams.get("c1") || "#ff7e5f";
-  const c2 = searchParams.get("c2") || "#feb47b";
-  const main = searchParams.get("main") || "LGTM";
-  const sub = searchParams.get("sub") || "Looks Good To Moai";
-  const imagePath = `${process.env.NEXT_PUBLIC_VERCEL_URL}/images/${name}.png`;
+  const inputName = pathname.split("/").pop() || DEFAULT_IMAGE_OPTIONS.image;
+  const name = isImageName(inputName) ? inputName : DEFAULT_IMAGE_OPTIONS.image;
 
-  const size = 400;
+  const sizeStr = searchParams.get("size") || String(DEFAULT_IMAGE_SIZE);
+  const size = Math.min(
+    Math.max(
+      isNaN(parseInt(sizeStr, 10)) ? DEFAULT_IMAGE_SIZE : parseInt(sizeStr, 10),
+      100
+    ),
+    400
+  );
+
+  // TODO: 正しいカラーコードかどうかのバリデーション
+  const c1 = searchParams.get("c1") || DEFAULT_IMAGE_OPTIONS.c1;
+  const c2 = searchParams.get("c2") || DEFAULT_IMAGE_OPTIONS.c2;
+  const main = searchParams.get("main") || DEFAULT_IMAGE_OPTIONS.main;
+  const sub = searchParams.get("sub") || DEFAULT_IMAGE_OPTIONS.sub;
+  const imagePath = `${process.env.NEXT_PUBLIC_VERCEL_URL}/images/${name}.png`;
 
   const fontData = await loadGoogleFont("M+PLUS+1p", main + sub);
 
   const response = new ImageResponse(
-    React.createElement(OgpComponent, { imagePath, c1, c2, main, sub, size }),
+    React.createElement(OgpComponent, { imagePath, size, c1, c2, main, sub }),
     {
       width: size,
       height: size,
@@ -40,6 +51,7 @@ export default async function handler(req: NextRequest) {
     }
   );
 
+  // TODO: いらなそうであれば削除
   // cacheの無効化設定
   // MEMO: ブラウザでキャッシュしている場合はこれでも対応不可能
   response.headers.set(

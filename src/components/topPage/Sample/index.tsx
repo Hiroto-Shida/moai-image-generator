@@ -6,20 +6,18 @@ import { ImageOptionsType } from "@/types/ImageOptionsType";
 import clsx from "clsx";
 
 type LineComponentProps = {
-  pageUrl: string;
   handleClickImage: (data: ImageOptionsType) => void;
   lineList: ImageOptionsType[];
   delay?: boolean;
 };
 
 const LineComponent: React.FC<LineComponentProps> = ({
-  pageUrl,
   handleClickImage,
   lineList,
   delay = false,
 }) => {
   const imagePath = (image: (typeof IMAGE_LIST)[number]) =>
-    `${pageUrl}/images/${image}.png`;
+    `/images/${image}.png`;
   return (
     <div
       className={clsx(styles.lineWrapper, {
@@ -48,22 +46,16 @@ const LineComponent: React.FC<LineComponentProps> = ({
 };
 
 type SampleProps = {
-  pageUrl: string;
   handleClickImage: (data: ImageOptionsType) => void;
   lineLists: ImageOptionsType[][];
 };
 
-const Sample: React.FC<SampleProps> = ({
-  pageUrl,
-  handleClickImage,
-  lineLists,
-}) => {
+const Sample: React.FC<SampleProps> = ({ handleClickImage, lineLists }) => {
   return (
     <div className={styles.sampleWrapper}>
       {lineLists.map((lineList, index) => (
         <LineComponent
           key={index}
-          pageUrl={pageUrl}
           handleClickImage={handleClickImage}
           lineList={index % 2 === 1 ? lineList.concat(lineList[0]) : lineList}
           delay={index % 2 === 1}

@@ -33,6 +33,7 @@ const Page: NextPage<
         pageUrl={pageUrl}
         imageOptions={{
           image: imageName,
+          size: queryObj.size,
           c1: queryObj.c1,
           c2: queryObj.c2,
           main: queryObj.main,
@@ -60,6 +61,7 @@ export const getServerSideProps: GetServerSideProps<PageProps> = async (
    * クエリパラメータを取得と整理
    */
   const imageQuery = getQuery(context.query.image);
+  const sizeQuery = getQuery(context.query.size);
   const c1Query = getQuery(context.query.c1);
   const c2Query = getQuery(context.query.c2);
   const mainQuery = getQuery(context.query.main);
@@ -67,6 +69,7 @@ export const getServerSideProps: GetServerSideProps<PageProps> = async (
 
   const queryObj: QueryObjType = {};
 
+  if (sizeQuery) queryObj.size = sizeQuery;
   if (c1Query) queryObj.c1 = c1Query;
   if (c2Query) queryObj.c2 = c2Query;
   if (mainQuery) queryObj.main = mainQuery;
