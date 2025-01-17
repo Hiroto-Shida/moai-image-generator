@@ -1,0 +1,14 @@
+@use "/src/styles/variables.module.scss" as *;
+@use "/src/styles/mixins.module.scss" as *;
+
+.captionWrapper {
+  display: flex;
+  gap: 2px;
+  width: 100%;
+
+  > .caption {
+    @include font-small;
+
+    color: $color-gray;
+  }
+}
