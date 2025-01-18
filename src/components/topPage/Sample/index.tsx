@@ -1,5 +1,5 @@
 import OgpComponent from "@/components/OgpComponent";
-import { IMAGE_LIST } from "@/constants/imageList";
+import { IMAGE_LIST } from "@/constants/image";
 import { ImageOptionsType } from "@/types/ImageOptionsType";
 import clsx from "clsx";
 import React from "react";

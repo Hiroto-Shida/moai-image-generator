@@ -1,4 +1,4 @@
-import { IMAGE_LIST } from "@/constants/imageList";
+import { IMAGE_LIST } from "@/constants/image";
 
 export type ImageOptionsType = {
   image: (typeof IMAGE_LIST)[number];

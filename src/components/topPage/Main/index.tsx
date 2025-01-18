@@ -1,6 +1,6 @@
 import ExportModal from "@/components/ExportModal";
 import Toast from "@/components/Toast";
-import { DEFAULT_IMAGE_OPTIONS } from "@/constants/imageOptions";
+import { DEFAULT_IMAGE_OPTIONS } from "@/constants/image";
 import { useDebounce } from "@/hooks/useDebounce";
 import { ImageOptionsType } from "@/types/ImageOptionsType";
 import { isImageName } from "@/utils/image";

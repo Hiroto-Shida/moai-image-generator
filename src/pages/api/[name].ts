@@ -1,4 +1,4 @@
-import { DEFAULT_IMAGE_OPTIONS } from "@/constants/imageOptions";
+import { DEFAULT_IMAGE_OPTIONS } from "@/constants/image";
 import { isColorCode } from "@/utils/color";
 import { loadGoogleFont } from "@/utils/font";
 import { isCorrectImageSize, isImageName } from "@/utils/image";

@@ -1,6 +1,8 @@
-import { IMAGE_LIST } from "@/constants/imageList";
-import { DEFAULT_IMAGE_OPTIONS } from "@/constants/imageOptions";
-import { IMAGE_SIZE } from "@/constants/imageSize";
+import {
+  DEFAULT_IMAGE_OPTIONS,
+  IMAGE_LIST,
+  IMAGE_SIZE,
+} from "@/constants/image";
 import { ImageOptionsType } from "@/types/ImageOptionsType";
 
 type ImageListType = typeof IMAGE_LIST;

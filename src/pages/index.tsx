@@ -1,6 +1,5 @@
 import Main from "@/components/topPage/Main";
-import { IMAGE_LIST } from "@/constants/imageList";
-import { DEFAULT_IMAGE_OPTIONS } from "@/constants/imageOptions";
+import { DEFAULT_IMAGE_OPTIONS, IMAGE_LIST } from "@/constants/image";
 import { ImageOptionsType } from "@/types/ImageOptionsType";
 import { Partial } from "@/types/Partial";
 import { isColorCode } from "@/utils/color";

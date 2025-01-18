@@ -8,3 +8,20 @@ export const DEFAULT_IMAGE_OPTIONS = {
   main: "LGTM",
   sub: "Looks Good To Moai",
 } as const satisfies ImageOptionsType;
+
+export const IMAGE_LIST = [
+  "appear",
+  "bow",
+  "dance",
+  "fight",
+  "good",
+  "happy",
+  "macho",
+  "walk",
+  "cry",
+] as const;
+
+export const IMAGE_SIZE = {
+  MIN: 50,
+  MAX: 400,
+} as const;
