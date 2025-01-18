@@ -73,6 +73,7 @@ const Main: React.FC<Props> = ({ pageUrl, initImageOptions, lineLists }) => {
     if (!c1 || !c2 || !main || !sub) return;
 
     const queryObj: {
+      image?: string;
       size?: string;
       c1?: string;
       c2?: string;
@@ -85,10 +86,17 @@ const Main: React.FC<Props> = ({ pageUrl, initImageOptions, lineLists }) => {
     if (c2 && c2 !== DEFAULT_IMAGE_OPTIONS.c2) queryObj.c2 = c2;
     if (main && main !== DEFAULT_IMAGE_OPTIONS.main) queryObj.main = main;
     if (sub && sub !== DEFAULT_IMAGE_OPTIONS.sub) queryObj.sub = sub;
-    const queryStr = new URLSearchParams(queryObj).toString();
 
-    const topUrl = queryStr ? `?image=${image}&${queryStr}` : `?image=${image}`;
-    const apiUrl = queryStr ? `/api/${image}?${queryStr}` : `/api/${image}`;
+    const apiQueryParams = new URLSearchParams(queryObj);
+    apiQueryParams.sort();
+    const apiQueryStr = apiQueryParams.toString();
+    const apiUrl = apiQueryStr ? `api/${image}?${apiQueryStr}` : `api/${image}`;
+
+    if (image !== DEFAULT_IMAGE_OPTIONS.image) queryObj.image = image;
+    const topQueryParams = new URLSearchParams(queryObj);
+    topQueryParams.sort();
+    const topQueryStr = topQueryParams.toString();
+    const topUrl = topQueryStr ? `?${topQueryStr}` : ``;
 
     setUrls({
       ogpUrl: `${pageUrl}${topUrl}`,
@@ -118,7 +126,6 @@ const Main: React.FC<Props> = ({ pageUrl, initImageOptions, lineLists }) => {
         formValues.image && isImageName(formValues.image)
           ? formValues.image
           : DEFAULT_IMAGE_OPTIONS.image,
-      // size: size,
       c1: formValues.c1 || DEFAULT_IMAGE_OPTIONS.c1,
       c2: formValues.c2 || DEFAULT_IMAGE_OPTIONS.c2,
       main: formValues.main || "",
