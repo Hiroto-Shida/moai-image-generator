@@ -101,7 +101,13 @@ const ExportModal: React.FC<ExportModalProps> = ({
               <Caption>e.g. Use as LGTM images on GitHub.</Caption>
             </div>
           </div>
-          <Button variant="primary" onClick={() => {}}>
+          <Button
+            variant="primary"
+            type="download"
+            fileName="moai-image"
+            href={imageSrc || ""}
+            disabled={!imageSrc}
+          >
             Download(PNG)
           </Button>
         </DialogPanel>
