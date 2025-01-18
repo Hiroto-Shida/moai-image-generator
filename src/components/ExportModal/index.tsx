@@ -46,7 +46,6 @@ const ExportModal: React.FC<ExportModalProps> = ({
 
   const { control } = methods;
 
-  // TODO: 下から出るようなanimationにしたい headless uiのtransition使う
   return (
     <Dialog
       open={isOpen}

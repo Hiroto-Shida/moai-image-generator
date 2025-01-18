@@ -27,6 +27,7 @@ const Page: NextPage<
   return (
     <>
       <Head>
+        {/* TODO: LGTMモアイにする */}
         <link rel="icon" href="/images/happy.png" />
         <meta property="og:image" content={`${pageUrl}${url}`} />
         <meta
