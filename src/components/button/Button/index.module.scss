@@ -49,6 +49,13 @@
     fill: $color-primary;
   }
 
+  &.Disabled {
+    cursor: not-allowed;
+    border: 2px solid transparent;
+    background-color: $color-disabled;
+    box-shadow: $box-shadow-black-2;
+  }
+
   > .icon {
     width: 20px;
     height: 20px;

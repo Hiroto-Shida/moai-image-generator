@@ -6,6 +6,7 @@ import styles from "./index.module.scss";
 type ButtonProps = {
   variant?: "black" | "primary";
   type?: "button" | "submit";
+  disabled?: boolean;
   onClick?: () => void;
   children: React.ReactNode;
 };
@@ -13,6 +14,7 @@ type ButtonProps = {
 const Button: React.FC<ButtonProps> = ({
   variant = "blacks",
   type = "button",
+  disabled = false,
   onClick,
   children,
 }) => {
@@ -20,10 +22,11 @@ const Button: React.FC<ButtonProps> = ({
     <button
       type={type}
       className={clsx(styles.buttonStyle, {
-        [styles.Black]: variant === "black",
-        [styles.Primary]: variant === "primary",
+        [styles.Black]: !disabled && variant === "black",
+        [styles.Primary]: !disabled && variant === "primary",
+        [styles.Disabled]: disabled,
       })}
-      onClick={onClick}
+      onClick={!disabled ? onClick : () => {}}
     >
       <DownloadIcon className={styles.icon} />
       <p className={styles.text}>{children}</p>
