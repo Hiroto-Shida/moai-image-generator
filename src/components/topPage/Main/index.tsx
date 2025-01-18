@@ -90,7 +90,9 @@ const Main: React.FC<Props> = ({ pageUrl, initImageOptions, lineLists }) => {
     const apiQueryParams = new URLSearchParams(queryObj);
     apiQueryParams.sort();
     const apiQueryStr = apiQueryParams.toString();
-    const apiUrl = apiQueryStr ? `api/${image}?${apiQueryStr}` : `api/${image}`;
+    const apiUrl = apiQueryStr
+      ? `/api/${image}?${apiQueryStr}`
+      : `/api/${image}`;
 
     if (image !== DEFAULT_IMAGE_OPTIONS.image) queryObj.image = image;
     const topQueryParams = new URLSearchParams(queryObj);
