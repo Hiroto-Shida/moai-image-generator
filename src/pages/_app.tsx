@@ -11,7 +11,7 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <div className={mPlus1.className}>
       <Header />
-      <main style={{ marginTop: "40px" }}>
+      <main style={{ marginTop: "40px", backgroundColor: "#ffffff" }}>
         <Component {...pageProps} />
       </main>
     </div>
