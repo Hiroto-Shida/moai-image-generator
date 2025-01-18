@@ -66,8 +66,10 @@ const ExportModal: React.FC<ExportModalProps> = ({
                 className={styles.image}
               />
             ) : (
-              // TODO: スケルトンスクリーンを表示(モアイ柄でも)
-              <p>Generating Image...</p>
+              <div className={styles.loadingWrapper}>
+                <div className={styles.image} />
+                <p className={styles.text}>Generating image...</p>
+              </div>
             )}
           </div>
           <div className={styles.urlsWrapper}>

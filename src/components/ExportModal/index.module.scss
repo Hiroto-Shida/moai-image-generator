@@ -52,7 +52,48 @@
   > .image {
     width: 100%;
     height: 100%;
-    // border: none;
+  }
+}
+
+.loadingWrapper {
+  position: relative;
+  background-color: rgba(0, 0, 0, 0.1);
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+
+  @keyframes skeleton-animation {
+    0% {
+      rotate: 0deg;
+    }
+    100% {
+      rotate: 360deg;
+    }
+  }
+
+  > .image {
+    position: relative;
+    top: 10%;
+    width: 70%;
+    height: 70%;
+    background-image: url("/images/happy.png");
+    background-size: 100%;
+    opacity: 0.3;
+    transform-origin: center;
+    animation: skeleton-animation 1.5s linear infinite;
+  }
+
+  > .text {
+    @include font-small-bold;
+
+    font-weight: bold;
+    position: absolute;
+    text-align: center;
+    white-space: nowrap;
+    top: 80%;
+    left: 50%;
+    transform: translateX(-50%);
   }
 }
 
