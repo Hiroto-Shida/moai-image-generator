@@ -1,15 +1,28 @@
 import MoaiImage from "../MoaiImage";
 
-type Props = {
-  main: string;
-  sub: string;
+export type OgpComponentProps = {
   imagePath: string;
   size: number;
+  c1: string;
+  c2: string;
+  main: string;
+  sub: string;
+  isOgp?: boolean;
 };
 
-const OgpComponent: React.FC<Props> = ({ main, sub, imagePath, size }) => {
+const OgpComponent: React.FC<OgpComponentProps> = ({
+  imagePath,
+  size,
+  c1,
+  c2,
+  main,
+  sub,
+  isOgp = true,
+}) => {
   const fontColor = "#ffffff";
   const shadowColor = "#000000";
+  const maSd = isOgp ? 2 : 0.5;
+  const suSd = isOgp ? 1 : 0.5;
 
   return (
     <>
@@ -20,7 +33,7 @@ const OgpComponent: React.FC<Props> = ({ main, sub, imagePath, size }) => {
           position: "relative",
           display: "flex",
           justifyContent: "center",
-          background: "linear-gradient(to right, #ff7e5f, #feb47b)",
+          background: `linear-gradient(to right, ${c1}, ${c2})`,
         }}
       >
         <MoaiImage
@@ -28,49 +41,43 @@ const OgpComponent: React.FC<Props> = ({ main, sub, imagePath, size }) => {
           width={size * 0.75}
           height={size * 0.75}
         />
-        <div
+        <p
           style={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
             position: "absolute",
             top: "60%",
+            color: fontColor,
+            margin: 0,
+            fontSize: `${size * 0.25}px`,
+            lineHeight: isOgp ? "90%" : "100%",
+            whiteSpace: "nowrap",
+            fontWeight: "bold",
+            fontFamily: "M PLUS 1p, sans-serif",
+            textShadow: `${maSd}px ${maSd}px 0 ${shadowColor}, -${maSd}px -${maSd}px 0 ${shadowColor}, ${maSd}px -${maSd}px 0 ${shadowColor}, -${maSd}px ${maSd}px 0 ${shadowColor}`,
+            zIndex: "2",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
           }}
         >
-          <p
-            style={{
-              color: fontColor,
-              margin: 0,
-              fontSize: "100px",
-              lineHeight: "100%",
-              letterSpacing: "3px",
-              whiteSpace: "pre-wrap",
-              fontWeight: "bold",
-              fontFamily: "Roboto, sans-serif",
-              textShadow: `2px 2px 0 ${fontColor}, -2px -2px 0 ${fontColor}, 2px -2px 0 ${fontColor}, -2px 2px 0 ${fontColor},
-            4px 4px 0 ${shadowColor}, -4px -4px 0 ${shadowColor}, 4px -4px 0 ${shadowColor}, -4px 4px 0 ${shadowColor}`,
-              zIndex: "2",
-            }}
-          >
-            {main}
-          </p>
-          <p
-            style={{
-              color: fontColor,
-              margin: 0,
-              fontSize: "33px",
-              lineHeight: "100%",
-              whiteSpace: "pre-wrap",
-              fontWeight: "bold",
-              fontFamily: "Roboto, sans-serif",
-              textShadow: `1px 1px 0 ${shadowColor}, -1px -1px 0 ${shadowColor}, 1px -1px 0 ${shadowColor}, -1px 1px 0 ${shadowColor}`,
-              zIndex: "2",
-            }}
-          >
-            {sub}
-          </p>
-        </div>
+          {main}
+        </p>
+        <p
+          style={{
+            position: "absolute",
+            top: "85%",
+            color: fontColor,
+            margin: 0,
+            fontSize: `${size * 0.08}px`,
+            lineHeight: "100%",
+            whiteSpace: "nowrap",
+            fontWeight: "bold",
+            fontFamily: "M PLUS 1p, sans-serif",
+            textShadow: `${suSd}px ${suSd}px 0 ${shadowColor}, -${suSd}px -${suSd}px 0 ${shadowColor}, ${suSd}px -${suSd}px 0 ${shadowColor}, -${suSd}px ${suSd}px 0 ${shadowColor}`,
+            zIndex: "2",
+          }}
+        >
+          {sub}
+        </p>
       </div>
     </>
   );

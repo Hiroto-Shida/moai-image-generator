@@ -1,4 +1,4 @@
-import { Html, Head, Main, NextScript } from "next/document";
+import { Head, Html, Main, NextScript } from "next/document";
 
 export default function Document() {
   // const timestamp = new Date().getTime(); // 現在の時間をミリ秒単位で取得
@@ -6,6 +6,7 @@ export default function Document() {
   return (
     <Html lang="ja">
       <Head>
+        {/* TODO: 画像をLGTMモアイにする */}
         <link rel="icon" href="/images/happy.png" />
         <meta
           httpEquiv="Cache-Control"

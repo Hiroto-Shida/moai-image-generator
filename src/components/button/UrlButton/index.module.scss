@@ -1,0 +1,50 @@
+@use "/src/styles/variables.module.scss" as *;
+@use "/src/styles/mixins.module.scss" as *;
+
+.urlButton {
+  border: 0;
+  display: flex;
+  font-family: inherit;
+  width: 100%;
+  box-shadow: $box-shadow-black-2;
+  border-radius: 4px;
+  transition: ease 0.2s;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.7;
+  }
+
+  > .url {
+    @include font-normal;
+
+    font-family: inherit;
+    flex: 1;
+    overflow: scroll;
+    white-space: nowrap;
+
+    padding: 0 4px;
+    height: 32px;
+    border-top: 1px solid $color-black;
+    border-left: 1px solid $color-black;
+    border-bottom: 1px solid $color-black;
+    border-right: 0;
+    border-radius: 4px 0 0 4px;
+    cursor: pointer;
+  }
+
+  > .url:focus {
+    outline: none;
+  }
+}
+
+.iconWrapper {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid $color-black;
+  border-radius: 0 4px 4px 0;
+  background-color: $color-primary;
+}

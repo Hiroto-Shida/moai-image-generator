@@ -6,13 +6,14 @@ type Props = {
 
 const MoaiImage: React.FC<Props> = ({ imagePath, width, height }) => {
   return (
-    <div
+    <img
+      src={imagePath}
       style={{
         position: "absolute",
-        background: `url(${imagePath})`,
+        // background: `url(${imagePath})`,
         // backgroundImage: `url(${imagePath})`,
-        backgroundSize: "100% 100%",
-        backgroundRepeat: "no-repeat",
+        // backgroundSize: "100% 100%",
+        // backgroundRepeat: "no-repeat",
         width: `${width}px`,
         height: `${height}px`,
         top: "40%",

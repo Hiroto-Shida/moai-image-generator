@@ -1,23 +1,38 @@
+@use "/src/styles/variables.module.scss" as *;
+@use "/src/styles/mixins.module.scss" as *;
+
 .toastWrapper {
-  position: absolute;
-  bottom: 0px;
-  width: 80%;
-  opacity: 0;
+  position: fixed;
+  bottom: -50px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  z-index: 51;
+  padding: 0 16px;
   display: flex;
   justify-content: center;
-  padding: 10px;
-  border: 1px solid #d2d2d2;
-  border-radius: 10px;
   transition: ease 0.2s;
-  font-weight: bold;
-  color: #4c4c4c;
-
-  > .message {
-    width: 100%;
-  }
+  opacity: 0;
 
   &.Active {
     bottom: 30px;
     opacity: 1;
+  }
+}
+
+.toastBody {
+  width: 100%;
+  max-width: 500px;
+  background-color: $color-white;
+  padding: 8px 0;
+  display: flex;
+  justify-content: center;
+  border: 1px solid $color-gray;
+  border-radius: 8px;
+  font-weight: bold;
+  color: $color-gray;
+
+  > .message {
+    width: 100%;
   }
 }
