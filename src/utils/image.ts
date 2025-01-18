@@ -2,6 +2,7 @@ import {
   DEFAULT_IMAGE_OPTIONS,
   IMAGE_LIST,
   IMAGE_SIZE,
+  SAMPLE_IMAGE_TEXT_LIST,
 } from "@/constants/image";
 import { ImageOptionsType } from "@/types/ImageOptionsType";
 
@@ -21,10 +22,6 @@ export const isCorrectImageSize = (value: string): boolean => {
 };
 
 export const randomImage = (): ImageOptionsType => {
-  // TODO: 文字もランダムにする
-  const main = DEFAULT_IMAGE_OPTIONS.main;
-  const sub = DEFAULT_IMAGE_OPTIONS.sub;
-
   const colorHex = (num: number) =>
     ("0" + Math.min(Math.max(0, num), 255).toString(16)).slice(-2);
 
@@ -35,6 +32,10 @@ export const randomImage = (): ImageOptionsType => {
   const cr2 = cr1 + 40;
   const cg2 = cg1 + 40;
   const cb2 = cb1 + 40;
+  const { main, sub } =
+    SAMPLE_IMAGE_TEXT_LIST[
+      Math.floor(Math.random() * SAMPLE_IMAGE_TEXT_LIST.length)
+    ];
 
   return {
     image: image,
