@@ -1,9 +1,7 @@
 import ExportModal from "@/components/ExportModal";
 import Toast from "@/components/Toast";
-import { IMAGE_LIST } from "@/constants/imageList";
 import { DEFAULT_IMAGE_OPTIONS } from "@/constants/imageOptions";
 import { useDebounce } from "@/hooks/useDebounce";
-import { useImageSizeStore } from "@/stores/useImageSizeStore";
 import { ImageOptionsType } from "@/types/ImageOptionsType";
 import { isImageName } from "@/utils/image";
 import { useCallback, useEffect, useState } from "react";
@@ -14,44 +12,42 @@ export type FormType = {
   image: string;
 } & Omit<ImageOptionsType, "image" | "size">;
 
+type UrlsType = {
+  ogpUrl: string;
+  imageUrl: string;
+};
+
 type Props = {
   pageUrl: string;
-  imageOptions: {
-    image: (typeof IMAGE_LIST)[number];
-  } & Partial<Omit<ImageOptionsType, "image">>;
+  initImageOptions: ImageOptionsType;
   lineLists: ImageOptionsType[][];
 };
 
-const Main: React.FC<Props> = ({ pageUrl, imageOptions, lineLists }) => {
+const Main: React.FC<Props> = ({ pageUrl, initImageOptions, lineLists }) => {
   const [isOpenedExportModal, setIsOpenedExportModal] = useState(false);
   const [isOpenToast, setIsOpenToast] = useState(false);
 
   const [imageSrc, setImageSrc] = useState<string | null>(null);
-  const [urls, setUrls] = useState<{ ogpUrl: string; imageUrl: string }>({
+  const [urls, setUrls] = useState<UrlsType>({
     ogpUrl: "",
     imageUrl: "",
   });
-  const size = useImageSizeStore((state) => state.size);
-
-  // TODO: カラーコードのバリデーションの確認
-  const defaultValues = {
-    image: imageOptions.image,
-    c1: imageOptions.c1 || DEFAULT_IMAGE_OPTIONS.c1,
-    c2: imageOptions.c2 || DEFAULT_IMAGE_OPTIONS.c2,
-    main: imageOptions.main || DEFAULT_IMAGE_OPTIONS.main,
-    sub: imageOptions.sub || DEFAULT_IMAGE_OPTIONS.sub,
-  };
 
   const [formattedImageOptions, setFormattedImageOptions] =
-    useState<ImageOptionsType>({ ...defaultValues, size: String(size) });
+    useState<ImageOptionsType>(initImageOptions);
 
-  // TODO: 空文字送信ができないようにする
   const methods = useForm<FormType>({
     mode: "onChange",
-    defaultValues,
+    defaultValues: {
+      image: initImageOptions.image,
+      c1: initImageOptions.c1,
+      c2: initImageOptions.c2,
+      main: initImageOptions.main,
+      sub: initImageOptions.sub,
+    },
   });
 
-  const { setValue, watch } = methods;
+  const { setValue, watch, trigger } = methods;
 
   const onSubmit: SubmitHandler<FormType> = () => {
     setIsOpenedExportModal(true);
@@ -64,38 +60,41 @@ const Main: React.FC<Props> = ({ pageUrl, imageOptions, lineLists }) => {
       setValue("c2", data.c2);
       setValue("main", data.main);
       setValue("sub", data.sub);
+      trigger();
     },
     [setValue]
   );
 
   // URLを生成
-  // TODO: defaultvaluesと同じ値のところは省略するようにする
   const generateUrls = useCallback(() => {
-    const { c1, c2, main, sub, image } = formattedImageOptions;
+    const { image, size, c1, c2, main, sub } = formattedImageOptions;
+
+    // 値が空の時はURLを生成しない
+    if (!c1 || !c2 || !main || !sub) return;
 
     const queryObj: {
-      size: string;
+      size?: string;
       c1?: string;
       c2?: string;
       main?: string;
       sub?: string;
-    } = {
-      size: String(size),
-    };
-    if (c1) queryObj.c1 = c1;
-    if (c2) queryObj.c2 = c2;
-    if (main) queryObj.main = main;
-    if (sub) queryObj.sub = sub;
+    } = {};
+
+    if (size !== DEFAULT_IMAGE_OPTIONS.size) queryObj.size = String(size);
+    if (c1 && c1 !== DEFAULT_IMAGE_OPTIONS.c1) queryObj.c1 = c1;
+    if (c2 && c2 !== DEFAULT_IMAGE_OPTIONS.c2) queryObj.c2 = c2;
+    if (main && main !== DEFAULT_IMAGE_OPTIONS.main) queryObj.main = main;
+    if (sub && sub !== DEFAULT_IMAGE_OPTIONS.sub) queryObj.sub = sub;
     const queryStr = new URLSearchParams(queryObj).toString();
 
     const topUrl = queryStr ? `?image=${image}&${queryStr}` : `?image=${image}`;
     const apiUrl = queryStr ? `/api/${image}?${queryStr}` : `/api/${image}`;
 
-    return {
+    setUrls({
       ogpUrl: `${pageUrl}${topUrl}`,
       imageUrl: `${pageUrl}${apiUrl}`,
-    };
-  }, [formattedImageOptions, pageUrl, size]);
+    });
+  }, [formattedImageOptions, pageUrl]);
 
   // // apiから画像を取得
   const fetchImage = useCallback(async () => {
@@ -113,13 +112,13 @@ const Main: React.FC<Props> = ({ pageUrl, imageOptions, lineLists }) => {
 
   const formatImageOptions = (
     formValues: Partial<FormType>
-  ): ImageOptionsType => {
+  ): Omit<ImageOptionsType, "size"> => {
     return {
       image:
         formValues.image && isImageName(formValues.image)
           ? formValues.image
           : DEFAULT_IMAGE_OPTIONS.image,
-      size: String(size),
+      // size: size,
       c1: formValues.c1 || DEFAULT_IMAGE_OPTIONS.c1,
       c2: formValues.c2 || DEFAULT_IMAGE_OPTIONS.c2,
       main: formValues.main || "",
@@ -130,35 +129,28 @@ const Main: React.FC<Props> = ({ pageUrl, imageOptions, lineLists }) => {
   // フォームの値が変更された時 formattedImageOptions を更新
   useEffect(() => {
     const subscription = watch((value) => {
-      setFormattedImageOptions(formatImageOptions(value));
+      setFormattedImageOptions((prev) => ({
+        ...prev,
+        ...formatImageOptions(value),
+      }));
     });
 
     return () => subscription.unsubscribe();
   }, [watch]);
 
-  // sizeが変更された時に formattedImageOptions を更新
-  useEffect(() => {
-    const formValues = methods.getValues();
-    setFormattedImageOptions(formatImageOptions(formValues));
-  }, [size]);
-
-  // formattedImageOptions が変更された時に URL を再生成
-  useEffect(() => {
-    const { ogpUrl, imageUrl } = generateUrls();
-    setUrls({
-      ogpUrl,
-      imageUrl,
-    });
-  }, [formattedImageOptions]);
-
-  const debounceFetchImage = useDebounce({
-    callback: () => fetchImage(),
+  const debounceGenerateUrls = useDebounce({
+    callback: () => generateUrls(),
     delay: 500,
   });
 
+  // formattedImageOptions が変更された時に URL を再生成(debounce)
+  useEffect(() => {
+    debounceGenerateUrls();
+  }, [formattedImageOptions]);
+
   // 画像URLが変更された時に再度画像を取得(debounce)
   useEffect(() => {
-    debounceFetchImage();
+    fetchImage();
   }, [urls.imageUrl]);
 
   const debounceCloseToast = useDebounce({
@@ -185,6 +177,10 @@ const Main: React.FC<Props> = ({ pageUrl, imageOptions, lineLists }) => {
       <ExportModal
         isOpen={isOpenedExportModal}
         onClose={() => setIsOpenedExportModal(false)}
+        size={formattedImageOptions.size}
+        setSize={(size) =>
+          setFormattedImageOptions({ ...formattedImageOptions, size })
+        }
         imageSrc={imageSrc}
         urls={urls}
         handleCopy={handleCopy}

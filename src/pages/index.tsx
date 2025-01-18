@@ -1,9 +1,12 @@
 import Main from "@/components/topPage/Main";
 import { IMAGE_LIST } from "@/constants/imageList";
+import { DEFAULT_IMAGE_OPTIONS } from "@/constants/imageOptions";
 import { ImageOptionsType } from "@/types/ImageOptionsType";
 import { Partial } from "@/types/Partial";
+import { isColorCode } from "@/utils/color";
 import { getQuery } from "@/utils/getQuery";
-import { isImageName, randomImage } from "@/utils/image";
+import { isCorrectImageSize, isImageName, randomImage } from "@/utils/image";
+import { cutText } from "@/utils/text";
 import {
   GetServerSideProps,
   GetServerSidePropsContext,
@@ -35,13 +38,15 @@ const Page: NextPage<
       </Head>
       <Main
         pageUrl={pageUrl}
-        imageOptions={{
+        initImageOptions={{
           image: imageName,
-          size: queryObj.size,
-          c1: queryObj.c1,
-          c2: queryObj.c2,
-          main: queryObj.main,
-          sub: queryObj.sub,
+          size: queryObj.size
+            ? Number(queryObj.size)
+            : DEFAULT_IMAGE_OPTIONS.size,
+          c1: queryObj.c1 || DEFAULT_IMAGE_OPTIONS.c1,
+          c2: queryObj.c2 || DEFAULT_IMAGE_OPTIONS.c2,
+          main: queryObj.main || DEFAULT_IMAGE_OPTIONS.main,
+          sub: queryObj.sub || DEFAULT_IMAGE_OPTIONS.sub,
         }}
         lineLists={lineLists}
       />
@@ -49,7 +54,9 @@ const Page: NextPage<
   );
 };
 
-type QueryObjType = Partial<Omit<ImageOptionsType, "image">>;
+type QueryObjType = Partial<Omit<ImageOptionsType, "image" | "size">> & {
+  size?: string;
+};
 
 interface PageProps {
   pageUrl: string;
@@ -73,17 +80,25 @@ export const getServerSideProps: GetServerSideProps<PageProps> = async (
 
   const queryObj: QueryObjType = {};
 
-  if (sizeQuery) queryObj.size = sizeQuery;
-  if (c1Query) queryObj.c1 = c1Query;
-  if (c2Query) queryObj.c2 = c2Query;
-  if (mainQuery) queryObj.main = mainQuery;
-  if (subQuery) queryObj.sub = subQuery;
+  if (
+    sizeQuery &&
+    isCorrectImageSize(sizeQuery) &&
+    sizeQuery !== String(DEFAULT_IMAGE_OPTIONS.size)
+  )
+    queryObj.size = sizeQuery;
+  if (c1Query && isColorCode(c1Query) && c1Query !== DEFAULT_IMAGE_OPTIONS.c1)
+    queryObj.c1 = c1Query;
+  if (c2Query && isColorCode(c2Query) && c2Query !== DEFAULT_IMAGE_OPTIONS.c2)
+    queryObj.c2 = c2Query;
+  if (mainQuery && mainQuery !== DEFAULT_IMAGE_OPTIONS.main)
+    queryObj.main = cutText(mainQuery, 100);
+  if (subQuery && subQuery !== DEFAULT_IMAGE_OPTIONS.sub)
+    queryObj.sub = cutText(subQuery, 200);
 
   /**
    * Sampleに表示する画像を生成
    */
   const lineLists: ImageOptionsType[][] = [];
-
   const createLineList: () => ImageOptionsType[] = () => {
     const oneLineList: ImageOptionsType[] = [];
     for (let i = 0; i < 5; i++) {
@@ -91,7 +106,6 @@ export const getServerSideProps: GetServerSideProps<PageProps> = async (
     }
     return oneLineList.concat(oneLineList);
   };
-
   lineLists.push(createLineList());
   lineLists.push(createLineList());
   lineLists.push(createLineList());

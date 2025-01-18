@@ -1,4 +1,3 @@
-import { useImageSizeStore } from "@/stores/useImageSizeStore";
 import { Dialog, DialogPanel } from "@headlessui/react";
 import clsx from "clsx";
 import { M_PLUS_1 } from "next/font/google";
@@ -22,6 +21,8 @@ type RangeFormType = {
 type ExportModalProps = {
   isOpen: boolean;
   onClose: () => void;
+  size: number;
+  setSize: (size: number) => void;
   imageSrc: string | null;
   urls: { ogpUrl: string; imageUrl: string };
   handleCopy: (text: string) => void;
@@ -30,13 +31,12 @@ type ExportModalProps = {
 const ExportModal: React.FC<ExportModalProps> = ({
   isOpen,
   onClose,
+  size,
+  setSize,
   imageSrc,
   urls,
   handleCopy,
 }) => {
-  const size = useImageSizeStore((state) => state.size);
-  const setSize = useImageSizeStore((state) => state.setSize);
-
   const methods = useForm<RangeFormType>({
     mode: "onChange",
     defaultValues: {

@@ -1,12 +1,21 @@
 import { IMAGE_LIST } from "@/constants/imageList";
 import { DEFAULT_IMAGE_OPTIONS } from "@/constants/imageOptions";
-import { DEFAULT_IMAGE_SIZE } from "@/constants/imageSize";
+import { IMAGE_SIZE } from "@/constants/imageSize";
 import { ImageOptionsType } from "@/types/ImageOptionsType";
 
 type ImageListType = typeof IMAGE_LIST;
 
 export const isImageName = (value: string): value is ImageListType[number] => {
   return IMAGE_LIST.includes(value as ImageListType[number]);
+};
+
+// 適切な画像サイズかどうか
+export const isCorrectImageSize = (value: string): boolean => {
+  return (
+    !isNaN(Number(value)) &&
+    Number(value) >= IMAGE_SIZE.MIN &&
+    Number(value) <= IMAGE_SIZE.MAX
+  );
 };
 
 export const randomImage = (): ImageOptionsType => {
@@ -27,7 +36,7 @@ export const randomImage = (): ImageOptionsType => {
 
   return {
     image: image,
-    size: String(DEFAULT_IMAGE_SIZE),
+    size: DEFAULT_IMAGE_OPTIONS.size,
     c1: "#" + colorHex(cr1) + colorHex(cg1) + colorHex(cb1),
     c2: "#" + colorHex(cr2) + colorHex(cg2) + colorHex(cb2),
     main,

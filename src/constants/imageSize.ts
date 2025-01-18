@@ -1,2 +1,4 @@
-// TODO: IMAGE_OPTIONSの定数にまとめる
-export const DEFAULT_IMAGE_SIZE = 400;
+export const IMAGE_SIZE = {
+  MIN: 50,
+  MAX: 400,
+} as const;
