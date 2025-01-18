@@ -41,51 +41,43 @@ const OgpComponent: React.FC<OgpComponentProps> = ({
           width={size * 0.75}
           height={size * 0.75}
         />
-        <div
+        <p
           style={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
             position: "absolute",
             top: "60%",
-            zIndex: "1",
+            color: fontColor,
+            margin: 0,
+            fontSize: `${size * 0.25}px`,
+            lineHeight: isOgp ? "90%" : "100%",
+            whiteSpace: "nowrap",
+            fontWeight: "bold",
+            fontFamily: "M PLUS 1p, sans-serif",
+            textShadow: `${maSd}px ${maSd}px 0 ${shadowColor}, -${maSd}px -${maSd}px 0 ${shadowColor}, ${maSd}px -${maSd}px 0 ${shadowColor}, -${maSd}px ${maSd}px 0 ${shadowColor}`,
+            zIndex: "2",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
           }}
         >
-          <span
-            style={{
-              color: fontColor,
-              margin: 0,
-              fontSize: `${size * 0.25}px`,
-              lineHeight: isOgp ? "90%" : "100%",
-              whiteSpace: "nowrap",
-              fontWeight: "bold",
-              fontFamily: "M PLUS 1p, sans-serif",
-              textShadow: `${maSd}px ${maSd}px 0 ${shadowColor}, -${maSd}px -${maSd}px 0 ${shadowColor}, ${maSd}px -${maSd}px 0 ${shadowColor}, -${maSd}px ${maSd}px 0 ${shadowColor}`,
-              zIndex: "2",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            {main}
-          </span>
-          <p
-            style={{
-              color: fontColor,
-              margin: 0,
-              fontSize: `${size * 0.08}px`,
-              lineHeight: "100%",
-              whiteSpace: "nowrap",
-              fontWeight: "bold",
-              fontFamily: "M PLUS 1p, sans-serif",
-              textShadow: `${suSd}px ${suSd}px 0 ${shadowColor}, -${suSd}px -${suSd}px 0 ${shadowColor}, ${suSd}px -${suSd}px 0 ${shadowColor}, -${suSd}px ${suSd}px 0 ${shadowColor}`,
-              zIndex: "2",
-            }}
-          >
-            {sub}
-          </p>
-        </div>
+          {main}
+        </p>
+        <p
+          style={{
+            position: "absolute",
+            top: "85%",
+            color: fontColor,
+            margin: 0,
+            fontSize: `${size * 0.08}px`,
+            lineHeight: "100%",
+            whiteSpace: "nowrap",
+            fontWeight: "bold",
+            fontFamily: "M PLUS 1p, sans-serif",
+            textShadow: `${suSd}px ${suSd}px 0 ${shadowColor}, -${suSd}px -${suSd}px 0 ${shadowColor}, ${suSd}px -${suSd}px 0 ${shadowColor}, -${suSd}px ${suSd}px 0 ${shadowColor}`,
+            zIndex: "2",
+          }}
+        >
+          {sub}
+        </p>
       </div>
     </>
   );
