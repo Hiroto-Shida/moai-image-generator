@@ -34,6 +34,7 @@ const FormSelect = <TFieldValues extends FieldValues>({
         <Controller
           control={control}
           name={name}
+          rules={{ required: !!props.required }}
           render={({ field }) => (
             <select className={styles.select} id={name} {...props} {...field}>
               {options.map((item) => (

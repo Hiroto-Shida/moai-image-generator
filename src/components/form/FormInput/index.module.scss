@@ -10,6 +10,11 @@
     width: 100%;
     background-color: $color-black;
     box-shadow: $box-shadow-black-2;
+    transition: ease 0.2s;
+
+    &.Error {
+      background-color: $color-error;
+    }
   }
 }
 

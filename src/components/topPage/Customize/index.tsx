@@ -15,7 +15,11 @@ type CustomizeProps = {
   onSubmit: SubmitHandler<FormType>;
 };
 const Customize: React.FC<CustomizeProps> = ({ imageOptions, onSubmit }) => {
-  const { handleSubmit, control } = useFormContext<FormType>();
+  const {
+    handleSubmit,
+    control,
+    formState: { isValid },
+  } = useFormContext<FormType>();
 
   const imagePath = `/images/${imageOptions.image}.png`;
 
@@ -41,24 +45,27 @@ const Customize: React.FC<CustomizeProps> = ({ imageOptions, onSubmit }) => {
             value: image,
             label: image,
           }))}
+          required
         />
         <div className={styles.colorWrapper}>
-          <FormColor label="Color1" control={control} name="c1" />
-          <FormColor label="Color2" control={control} name="c2" />
+          <FormColor label="Color1" control={control} name="c1" required />
+          <FormColor label="Color2" control={control} name="c2" required />
         </div>
         <FormInput
           label="Main Text"
           control={control}
           name="main"
           maxLength={50}
+          required
         />
         <FormInput
           label="Sub Text"
           control={control}
           name="sub"
           maxLength={100}
+          required
         />
-        <Button variant="black" type="submit">
+        <Button variant="black" type="submit" disabled={!isValid}>
           Export
         </Button>
       </form>

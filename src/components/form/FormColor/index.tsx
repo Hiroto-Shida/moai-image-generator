@@ -26,6 +26,7 @@ const FormColor = <TFieldValues extends FieldValues>({
         <Controller
           control={control}
           name={name}
+          rules={{ required: !!props.required }}
           render={({ field }) => (
             <input
               className={styles.input}
