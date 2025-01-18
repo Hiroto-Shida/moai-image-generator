@@ -1,0 +1,21 @@
+@use "/src/styles/variables.module.scss" as *;
+@use "/src/styles/mixins.module.scss" as *;
+
+.labelStyle {
+  @include font-small-bold;
+
+  display: block;
+  transition: ease 0.2s;
+
+  &.Black {
+    color: $color-black;
+  }
+
+  &.Gray {
+    color: $color-gray;
+  }
+
+  &.Error {
+    color: $color-error;
+  }
+}

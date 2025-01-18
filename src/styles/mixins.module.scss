@@ -1,0 +1,45 @@
+@use "./variables.module.scss" as *;
+
+/* SPサイズのみの設定 */
+@mixin sp {
+  // SP/PC 切り替えブレークポイント
+  @media only screen and (width <= 544px) {
+    @content;
+  }
+}
+
+@mixin font-normal-bold {
+  font-size: 16px;
+  font-style: normal;
+  font-weight: bold;
+  line-height: 140%;
+  color: $color-black;
+  letter-spacing: 0;
+}
+
+@mixin font-normal {
+  font-size: 16px;
+  font-style: normal;
+  font-weight: normal;
+  line-height: 100%;
+  color: $color-black;
+  letter-spacing: 0;
+}
+
+@mixin font-small-bold {
+  font-size: 14px;
+  font-style: normal;
+  font-weight: bold;
+  line-height: 100%;
+  color: $color-black;
+  letter-spacing: 0;
+}
+
+@mixin font-small {
+  font-size: 14px;
+  font-style: normal;
+  font-weight: normal;
+  line-height: 100%;
+  color: $color-black;
+  letter-spacing: 0;
+}

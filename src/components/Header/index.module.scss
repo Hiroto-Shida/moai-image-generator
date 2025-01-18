@@ -1,0 +1,26 @@
+@use "/src/styles/variables.module.scss" as *;
+@use "/src/styles/mixins.module.scss" as *;
+
+.headerStyle {
+  position: fixed;
+  top: 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  height: 40px;
+  z-index: 2;
+  padding: 8px;
+  background-color: $color-white;
+  box-shadow: $box-shadow-black-2;
+  border-bottom: 1px solid $color-black;
+
+  > .logo {
+    width: 24px;
+    height: 24px;
+  }
+
+  > .title {
+    @include font-normal-bold;
+  }
+}

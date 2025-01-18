@@ -13,7 +13,9 @@ const Toast: React.FC<ToastProps> = ({ isOpen, message }) => {
         [styles.Active]: isOpen,
       })}
     >
-      <p>{message}</p>
+      <div className={styles.toastBody}>
+        <p>{message}</p>
+      </div>
     </div>
   );
 };

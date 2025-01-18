@@ -1,0 +1,52 @@
+@use "/src/styles/variables.module.scss" as *;
+@use "/src/styles/mixins.module.scss" as *;
+
+.formWrapper {
+  width: 100%;
+  position: relative;
+
+  .underline {
+    height: 2px;
+    width: 100%;
+    background-color: $color-black;
+    box-shadow: $box-shadow-black-2;
+    transition: ease 0.2s;
+
+    &.Error {
+      background-color: $color-error;
+    }
+  }
+}
+
+.inputWrapper {
+  display: flex;
+  align-items: center;
+  height: 24px;
+
+  .input {
+    @include font-normal-bold;
+
+    background-color: transparent;
+    width: 100%;
+    border: 0;
+    padding-right: 32px;
+  }
+
+  .input:focus {
+    outline: none;
+  }
+
+  .icon {
+    cursor: pointer;
+    position: absolute;
+    border: 0;
+    background-color: transparent;
+    right: 0;
+    width: 24px;
+    height: 24px;
+
+    &.Hidden {
+      display: none;
+    }
+  }
+}

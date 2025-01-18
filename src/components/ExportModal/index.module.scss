@@ -1,0 +1,116 @@
+@use "/src/styles/variables.module.scss" as *;
+@use "/src/styles/mixins.module.scss" as *;
+
+.dialogWrapper {
+  position: relative;
+  z-index: 50;
+}
+
+.backGround {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  width: 100vw;
+  justify-content: center;
+  align-items: center;
+  padding: 0 16px;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.modalWrapper {
+  position: relative;
+  border-radius: 8px;
+  padding: 16px;
+  border: 1px solid $color-black;
+  background-color: $color-white;
+  width: 100%;
+  max-width: 500px;
+  box-shadow: $box-shadow-black-4;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+
+  > .close {
+    cursor: pointer;
+    position: absolute;
+    border: 0;
+    background-color: transparent;
+    top: 16px;
+    right: 16px;
+    width: 24px;
+    height: 24px;
+  }
+}
+
+.imageWrapper {
+  width: 150px;
+  height: 150px;
+  box-shadow: $box-shadow-black-2;
+
+  > .image {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.loadingWrapper {
+  position: relative;
+  background-color: rgba(0, 0, 0, 0.1);
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+
+  @keyframes skeleton-animation {
+    0% {
+      rotate: 0deg;
+    }
+    100% {
+      rotate: 360deg;
+    }
+  }
+
+  > .image {
+    position: relative;
+    top: 10%;
+    width: 70%;
+    height: 70%;
+    background-image: url("/images/happy.png");
+    background-size: 100%;
+    opacity: 0.3;
+    transform-origin: center;
+    animation: skeleton-animation 1.5s linear infinite;
+  }
+
+  > .text {
+    @include font-small-bold;
+
+    font-weight: bold;
+    position: absolute;
+    text-align: center;
+    white-space: nowrap;
+    top: 80%;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
+.urlsWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+
+  > .url {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+}
+
+.resizeWrapper {
+  display: flex;
+  gap: 8px;
+}

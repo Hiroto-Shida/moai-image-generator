@@ -1,0 +1,72 @@
+@use "/src/styles/variables.module.scss" as *;
+@use "/src/styles/mixins.module.scss" as *;
+
+.buttonStyle {
+  display: flex;
+  justify-content: center;
+  gap: 4px;
+  padding: 8px 0;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: ease 0.2s;
+  width: 100%;
+
+  &.Black {
+    border: 2px solid $color-black;
+    background-color: $color-black;
+    color: $color-white;
+    box-shadow: $box-shadow-black-2;
+  }
+
+  &.Black:hover {
+    background-color: $color-white;
+  }
+
+  &.Black:hover > .text {
+    color: $color-black;
+  }
+
+  &.Black:hover > .icon > g > path {
+    fill: $color-black;
+  }
+
+  &.Primary {
+    border: 2px solid $color-primary;
+    background-color: $color-primary;
+    color: $color-white;
+    box-shadow: $box-shadow-primary-2;
+  }
+
+  &.Primary:hover {
+    background-color: $color-white;
+  }
+
+  &.Primary:hover > .text {
+    color: $color-primary;
+  }
+
+  &.Primary:hover > .icon > g > path {
+    fill: $color-primary;
+  }
+
+  &.Disabled {
+    cursor: not-allowed;
+    border: 2px solid transparent;
+    background-color: $color-disabled;
+    box-shadow: $box-shadow-black-2;
+  }
+
+  > .icon {
+    width: 20px;
+    height: 20px;
+  }
+  > .icon > g > path {
+    fill: $color-white;
+  }
+
+  > .text {
+    @include font-normal-bold;
+
+    color: $color-white;
+  }
+}
