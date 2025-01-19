@@ -3,7 +3,7 @@
 
 .dialogWrapper {
   position: relative;
-  z-index: 50;
+  z-index: $z-index-modal;
 }
 
 .backGround {
