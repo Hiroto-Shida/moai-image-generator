@@ -1,5 +1,5 @@
 import Header from "@/components/Header";
-import "@/styles/globals.css";
+import "@/styles/globals.scss";
 import type { AppProps } from "next/app";
 import { M_PLUS_1 } from "next/font/google";
 
@@ -11,7 +11,7 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <div className={mPlus1.className}>
       <Header />
-      <main style={{ marginTop: "40px", backgroundColor: "#ffffff" }}>
+      <main style={{ marginTop: "40px" }}>
         <Component {...pageProps} />
       </main>
     </div>

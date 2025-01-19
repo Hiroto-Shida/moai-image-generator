@@ -1,0 +1,15 @@
+@use "/src/styles/variables.module.scss" as *;
+@use "/src/styles/mixins.module.scss" as *;
+
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+  background-color: $color-white;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
