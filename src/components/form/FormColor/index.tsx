@@ -22,22 +22,20 @@ const FormColor = <TFieldValues extends FieldValues>({
       <Label htmlFor={name} variant="gray">
         {label}
       </Label>
-      <div className={styles.inputWrapper}>
-        <Controller
-          control={control}
-          name={name}
-          rules={{ required: !!props.required }}
-          render={({ field }) => (
-            <input
-              className={styles.input}
-              id={name}
-              type="color"
-              {...props}
-              {...field}
-            />
-          )}
-        />
-      </div>
+      <Controller
+        control={control}
+        name={name}
+        rules={{ required: !!props.required }}
+        render={({ field }) => (
+          <input
+            className={styles.input}
+            id={name}
+            type="color"
+            {...props}
+            {...field}
+          />
+        )}
+      />
     </div>
   );
 };
