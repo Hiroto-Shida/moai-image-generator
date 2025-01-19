@@ -26,7 +26,6 @@ export const IMAGE_SIZE = {
   MAX: 400,
 } as const;
 
-// TODO: 選択肢を増やす
 export const SAMPLE_IMAGE_TEXT_LIST: {
   main: ImageOptionsType["main"];
   sub: ImageOptionsType["sub"];
@@ -36,19 +35,51 @@ export const SAMPLE_IMAGE_TEXT_LIST: {
     sub: "Looks Good To Moai",
   },
   {
-    main: "MMH",
-    sub: "​Make Moai Happy",
+    main: "LGTM",
+    sub: "Let's Groove To Moai",
   },
   {
-    main: "MIH",
-    sub: "​Moai Is Happy",
+    main: "LGTM",
+    sub: "Live Greatly, Trust Moai",
   },
   {
-    main: "MFWM",
-    sub: "More Fun With Moai",
+    main: "MMMM",
+    sub: "Moai Moai Moai Moai",
   },
   {
-    main: "MHWM",
-    sub: "Magic Happens With Moai",
+    main: "MBTI",
+    sub: "Moai Beyond Time Itself",
+  },
+  {
+    main: "OMG",
+    sub: "Oh Moai's God",
+  },
+  {
+    main: "IMHO",
+    sub: "In Moai Humble Opinion",
+  },
+  {
+    main: "PM",
+    sub: "Professional Moai",
+  },
+  {
+    main: "BGM",
+    sub: "Background Moai",
+  },
+  {
+    main: "CMS",
+    sub: "Content Moai System",
+  },
+  {
+    main: "DMP",
+    sub: "Data Moai Platform",
+  },
+  {
+    main: "HTML",
+    sub: "History Told by Moai",
+  },
+  {
+    main: "TEAM",
+    sub: "To Each, A Moai",
   },
 ] as const;
