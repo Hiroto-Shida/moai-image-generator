@@ -9,3 +9,26 @@
   align-items: center;
   padding-top: 16px;
 }
+
+.topWrapper {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  max-width: $content-width-pc;
+
+  @include sp {
+    width: 100%;
+    max-width: $content-width-sp;
+    flex-direction: column;
+    gap: 8px;
+  }
+}
+
+.imageWrapper {
+  width: 250px;
+  height: 250px;
+  box-shadow: $box-shadow-black-4;
+  overflow: hidden;
+}

@@ -13,32 +13,26 @@ import styles from "./index.module.scss";
 
 type FormInputProps<TFieldValues extends FieldValues> = Omit<
   React.ComponentProps<"input">,
-  "name"
+  "name" | "onChange"
 > & {
   label: string;
   control: Control<TFieldValues>;
   name: FieldPath<TFieldValues>;
+  handleChange: (value: string) => void;
 };
 
 const FormInput = <TFieldValues extends FieldValues>({
   label,
   control,
   name,
+  handleChange,
   ...props
 }: FormInputProps<TFieldValues>) => {
   const {
-    setValue,
-    trigger,
     formState: { errors },
   } = useFormContext();
 
   const value = useWatch({ name });
-
-  const clearInput = () => {
-    // @ts-expect-error 空文字 が受け入れられないので無視
-    setValue(name, "");
-    trigger(name);
-  };
 
   return (
     <div className={styles.formWrapper}>
@@ -51,7 +45,18 @@ const FormInput = <TFieldValues extends FieldValues>({
           name={name}
           rules={{ required: !!props.required }}
           render={({ field }) => (
-            <input className={styles.input} id={name} {...props} {...field} />
+            <input
+              className={styles.input}
+              id={name}
+              {...props}
+              {...field}
+              onChange={(e) => {
+                field.onChange(e);
+                handleChange(e.target.value);
+              }}
+              value={props.value}
+              placeholder={props.placeholder}
+            />
           )}
         />
         <button
@@ -59,7 +64,7 @@ const FormInput = <TFieldValues extends FieldValues>({
             [styles.Hidden]: value === "",
           })}
           type="button"
-          onClick={clearInput}
+          onClick={() => handleChange("")}
         >
           <ClearIcon />
         </button>

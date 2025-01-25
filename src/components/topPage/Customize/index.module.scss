@@ -1,11 +1,6 @@
 @use "/src/styles/variables.module.scss" as *;
 @use "/src/styles/mixins.module.scss" as *;
 
-.bodyWrapper {
-  height: 100vh;
-  height: 100dvh;
-}
-
 .topWrapper {
   display: flex;
   gap: 16px;

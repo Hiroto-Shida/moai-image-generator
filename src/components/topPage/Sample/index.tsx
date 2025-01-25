@@ -1,23 +1,27 @@
+"use client";
 import OgpComponent from "@/components/OgpComponent";
 import { IMAGE_LIST } from "@/constants/image";
+import { pageSearchParams } from "@/searchParams/searchParams";
 import { ImageOptionsType } from "@/types/ImageOptionsType";
 import clsx from "clsx";
+import { useQueryStates } from "nuqs";
 import React from "react";
 import styles from "./index.module.scss";
 
 type LineComponentProps = {
-  handleClickImage: (data: ImageOptionsType) => void;
   lineList: ImageOptionsType[];
   delay?: boolean;
 };
 
 const LineComponent: React.FC<LineComponentProps> = ({
-  handleClickImage,
   lineList,
   delay = false,
 }) => {
+  const [{}, setForm] = useQueryStates(pageSearchParams);
+
   const imagePath = (image: (typeof IMAGE_LIST)[number]) =>
     `/images/${image}.png`;
+
   return (
     <div
       className={clsx(styles.lineWrapper, {
@@ -28,7 +32,7 @@ const LineComponent: React.FC<LineComponentProps> = ({
         <button
           className={styles.image}
           key={index}
-          onClick={() => handleClickImage(line)}
+          onClick={() => setForm(line)}
         >
           <OgpComponent
             imagePath={imagePath(line.image)}
@@ -46,17 +50,15 @@ const LineComponent: React.FC<LineComponentProps> = ({
 };
 
 type SampleProps = {
-  handleClickImage: (data: ImageOptionsType) => void;
   lineLists: ImageOptionsType[][];
 };
 
-const Sample: React.FC<SampleProps> = ({ handleClickImage, lineLists }) => {
+const Sample: React.FC<SampleProps> = ({ lineLists }) => {
   return (
     <div className={styles.sampleWrapper}>
       {lineLists.map((lineList, index) => (
         <LineComponent
           key={index}
-          handleClickImage={handleClickImage}
           lineList={index % 2 === 1 ? lineList.concat(lineList[0]) : lineList}
           delay={index % 2 === 1}
         />

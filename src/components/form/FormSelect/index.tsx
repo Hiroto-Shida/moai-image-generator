@@ -36,7 +36,17 @@ const FormSelect = <TFieldValues extends FieldValues>({
           name={name}
           rules={{ required: !!props.required }}
           render={({ field }) => (
-            <select className={styles.select} id={name} {...props} {...field}>
+            <select
+              className={styles.select}
+              id={name}
+              {...props}
+              {...field}
+              onChange={(e) => {
+                field.onChange(e);
+                if (props.onChange) props.onChange(e);
+              }}
+              value={props.value}
+            >
               {options.map((item) => (
                 <option key={item.value} value={item.value}>
                   {item.label}
