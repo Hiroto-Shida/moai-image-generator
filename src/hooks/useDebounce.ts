@@ -1,20 +1,19 @@
 import { useCallback, useRef } from "react";
 
-type Props = {
-  callback: () => void;
-  delay?: number;
-};
+type Debounce = (fn: () => void) => void;
 
-export const useDebounce = ({ callback, delay = 5_000 }: Props) => {
-  const timerRef = useRef<NodeJS.Timeout | null>(null);
-
-  const debounce = useCallback(() => {
-    if (timerRef.current) clearTimeout(timerRef.current);
-
-    timerRef.current = setTimeout(() => {
-      callback();
-    }, delay);
-  }, [delay, callback]);
-
+export const useDebounce = (timeout: number): Debounce => {
+  const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const debounce: Debounce = useCallback(
+    (fn) => {
+      if (timer.current) {
+        clearTimeout(timer.current);
+      }
+      timer.current = setTimeout(() => {
+        fn();
+      }, timeout);
+    },
+    [timeout]
+  );
   return debounce;
 };
