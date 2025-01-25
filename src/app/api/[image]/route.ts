@@ -3,19 +3,20 @@ import { isColorCode } from "@/utils/color";
 import { loadGoogleFont } from "@/utils/font";
 import { isCorrectImageSize, isImageName } from "@/utils/image";
 import { cutText } from "@/utils/text";
-import { ImageResponse } from "@vercel/og";
+import { ImageResponse } from "next/og";
 import { NextRequest } from "next/server";
 import React from "react";
-import OgpComponent from "../../components/OgpComponent";
+import OgpComponent from "../../../components/OgpComponent";
 
-export const config = {
-  runtime: "edge",
-};
+export const runtime = "edge";
 
-export default async function handler(req: NextRequest) {
-  const { searchParams, pathname } = new URL(req.url);
+export async function GET(
+  req: NextRequest,
+  { params }: { params: Promise<{ image: string }> }
+) {
+  const { searchParams } = new URL(req.url);
 
-  const inputName = pathname.split("/").pop() || DEFAULT_IMAGE_OPTIONS.image;
+  const inputName = (await params).image || DEFAULT_IMAGE_OPTIONS.image;
   const name = isImageName(inputName) ? inputName : DEFAULT_IMAGE_OPTIONS.image;
   const imagePath = `${process.env.NEXT_PUBLIC_VERCEL_URL}/images/${name}.png`;
 
@@ -54,16 +55,6 @@ export default async function handler(req: NextRequest) {
       ],
     }
   );
-
-  // TODO: いらなそうであれば削除
-  // cacheの無効化設定
-  // MEMO: ブラウザでキャッシュしている場合はこれでも対応不可能
-  response.headers.set(
-    "Cache-Control",
-    "no-store, no-cache, must-revalidate, proxy-revalidate"
-  );
-  response.headers.set("Expires", "0");
-  response.headers.set("Pragma", "no-cache");
 
   return response;
 }

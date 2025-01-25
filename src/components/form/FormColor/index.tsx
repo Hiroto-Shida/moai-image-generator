@@ -33,6 +33,11 @@ const FormColor = <TFieldValues extends FieldValues>({
             type="color"
             {...props}
             {...field}
+            onChange={(e) => {
+              field.onChange(e);
+              if (props.onChange) props.onChange(e);
+            }}
+            value={props.value}
           />
         )}
       />

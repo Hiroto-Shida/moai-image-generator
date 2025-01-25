@@ -37,7 +37,7 @@ const DownloadButton: React.FC<DownloadButtonProps> = ({
 
 type NormalButtonProps = {
   variant?: "black" | "primary";
-  type?: "button" | "submit";
+  type: "button";
   href?: string;
   disabled?: boolean;
   onClick?: () => void;
@@ -46,7 +46,7 @@ type NormalButtonProps = {
 
 const NormalButton: React.FC<NormalButtonProps> = ({
   variant = "black",
-  type = "button",
+  type,
   disabled = false,
   onClick,
   children,

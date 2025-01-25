@@ -77,6 +77,7 @@ const FormRange = <TFieldValues extends FieldValues>({
                 field.onChange(e);
                 onChange(e.currentTarget.value);
               }}
+              value={props.value}
             />
           )}
         />
